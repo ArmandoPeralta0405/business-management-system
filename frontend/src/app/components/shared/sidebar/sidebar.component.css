@@ -1,0 +1,19 @@
+/* Estilo para submenús anidados */
+.nav.flex-column .nav.flex-column {
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Flecha animada */
+  .nav-link[data-bs-toggle="collapse"] i.fa-chevron-down {
+    transition: transform 0.3s;
+  }
+  
+  .nav-link[data-bs-toggle="collapse"][aria-expanded="true"] i.fa-chevron-down {
+    transform: rotate(180deg);
+  }
+  
+  /* Estilo para items activos */
+  .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid #0d6efd;
+  }

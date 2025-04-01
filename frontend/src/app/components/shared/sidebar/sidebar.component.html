@@ -1,0 +1,51 @@
+<div class="sidebar text-white">
+  <div class="sidebar-header p-3 d-flex justify-content-between align-items-center">
+    <span class="fs-5">Módulos del Sistema</span>
+    <button class="btn btn-sm btn-outline-light d-lg-none" (click)="toggleCollapse()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="sidebar-menu">
+    <ul class="nav flex-column">
+            <!-- Otros menús principales -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  (click)="closeOnMobile()">
+          <i class="fa-solid fa-gauge-high"></i> Panel de Control
+        </a>
+      </li>
+
+      <!-- Menú principal Sistema General con submenú -->
+      <li class="nav-item">
+        <a class="nav-link d-flex justify-content-between align-items-center" 
+           data-bs-toggle="collapse" href="#sistemaGeneralSubmenu">
+          <div>
+            <i class="fas fa-cogs me-2"></i> Sistema General
+          </div>
+          <i class="fas fa-chevron-down"></i>
+        </a>
+        <div class="collapse" id="sistemaGeneralSubmenu">
+          <ul class="nav flex-column ps-4">
+            <li class="nav-item">
+              <a class="nav-link" 
+                 routerLinkActive="active"
+                 (click)="closeOnMobile()">
+                <i class="fas fa-list me-2"></i> Mantenimientos
+              </a>
+              <!-- Submenú de Mantenimientos -->
+              <ul class="nav flex-column ps-3">
+                <li class="nav-item">
+                  <a class="nav-link" 
+                    [routerLink]="['/sistema_general/mantenimientos/paises']" routerLinkActive="router-link-active" 
+                     routerLinkActive="active"
+                     (click)="closeOnMobile()">
+                    <i class="fas fa-flag me-2"></i> Países
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </li>     
+    </ul>
+  </div>
+</div>

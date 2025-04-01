@@ -1,0 +1,25 @@
+/* Footer CSS */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 1rem;
+    z-index: 99; /* Un z-index menor que el sidebar */
+    margin-left: 250px; /* Igual al ancho del sidebar */
+    transition: margin-left 0.3s; /* Para animación del sidebar */
+  }
+  
+  /* Ajuste cuando el sidebar está colapsado */
+  @media (max-width: 991.98px) {
+    .footer {
+      margin-left: 0;
+    }
+  }
+  
+  /* Ajuste del contenido principal */
+  .main-content {
+    padding-bottom: 80px; /* Altura aproximada del footer */
+  }
