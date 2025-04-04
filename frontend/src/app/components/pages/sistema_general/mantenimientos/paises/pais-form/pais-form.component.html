@@ -1,0 +1,108 @@
+<h2>Formulario de Paises</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2" [routerLink]="['/sistema_general/mantenimientos/paises']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <form [formGroup]="paisForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="descripcion" 
+                           formControlName="descripcion"
+                           [class.is-invalid]="paisForm.get('descripcion')?.invalid && (paisForm.get('descripcion')?.dirty || paisForm.get('descripcion')?.touched)"
+                           placeholder="Ingrese la descripción del pais"
+                           autocomplete="off">
+                    
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="paisForm.get('descripcion')?.invalid && (paisForm.get('descripcion')?.dirty || paisForm.get('descripcion')?.touched)"
+                         class="invalid-feedback">
+                        <div *ngIf="paisForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="paisForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="nacionalidad" class="form-label">Nacionalidad</label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="nacionalidad" 
+                           formControlName="nacionalidad"
+                           [class.is-invalid]="paisForm.get('nacionalidad')?.invalid && (paisForm.get('nacionalidad')?.dirty || paisForm.get('nacionalidad')?.touched)"
+                           placeholder="Ingrese la nacionalidad del pais"
+                           autocomplete="off">
+                    
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="paisForm.get('nacionalidad')?.invalid && (paisForm.get('nacionalidad')?.dirty || paisForm.get('nacionalidad')?.touched)"
+                         class="invalid-feedback">
+                        <div *ngIf="paisForm.get('nacionalidad')?.errors?.['required']">
+                            La nacionalidad es requerida
+                        </div>
+                        <div *ngIf="paisForm.get('nacionalidad')?.errors?.['maxlength']">
+                            La nacionalidad no puede exceder los 50 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="codigo_iso3" class="form-label">ISO 3</label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="codigo_iso3" 
+                           formControlName="codigo_iso3"
+                           [class.is-invalid]="paisForm.get('codigo_iso3')?.invalid && (paisForm.get('codigo_iso3')?.dirty || paisForm.get('codigo_iso3')?.touched)"
+                           placeholder="Ingrese el Código ISO 3 del pais"
+                           autocomplete="off">
+                    
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="paisForm.get('codigo_iso3')?.invalid && (paisForm.get('codigo_iso3')?.dirty || paisForm.get('codigo_iso3')?.touched)"
+                         class="invalid-feedback">
+                        <div *ngIf="paisForm.get('codigo_iso3')?.errors?.['required']">
+                            El Código ISO 3 es requerida
+                        </div>
+                        <div *ngIf="paisForm.get('codigo_iso3')?.errors?.['maxlength']">
+                            El Código ISO 3 no puede exceder los 3 caracteres
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" 
+                        class="btn btn-outline-secondary" 
+                        [routerLink]="['/sistema_general/mantenimientos/paises']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" 
+                        class="btn btn-primary" 
+                        [disabled]="paisForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> 
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

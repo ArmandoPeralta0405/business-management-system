@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { PaisListComponent } from './components/pages/sistema_general/mantenimientos/pais/pais-list/pais-list.component';
-import { PaisFormComponent } from './components/pages/sistema_general/mantenimientos/pais/pais-form/pais-form.component';
 import { DashboardComponent } from './components/pages/others/dashboard/dashboard.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MainComponent } from './components/main/main.component';
@@ -9,6 +7,10 @@ import { RolListComponent } from './components/pages/sistema_general/mantenimien
 import { RolFormComponent } from './components/pages/sistema_general/mantenimientos/roles/rol-form/rol-form.component';
 import { DepositoFormComponent } from './components/pages/sistema_general/mantenimientos/depositos/deposito-form/deposito-form.component';
 import { DepositoListComponent } from './components/pages/sistema_general/mantenimientos/depositos/deposito-list/deposito-list.component';
+import { PaisListComponent } from './components/pages/sistema_general/mantenimientos/paises/pais-list/pais-list.component';
+import { PaisFormComponent } from './components/pages/sistema_general/mantenimientos/paises/pais-form/pais-form.component';
+import { DepartamentoFormComponent } from './components/pages/sistema_general/mantenimientos/departamentos/departamento-form/departamento-form.component';
+import { DepartamentoListComponent } from './components/pages/sistema_general/mantenimientos/departamentos/departamento-list/departamento-list.component';
 
 export const routes: Routes = [
     {
@@ -33,14 +35,18 @@ export const routes: Routes = [
         { 
           path: 'sistema_general/mantenimientos',
           children: [
-            { path: 'paises', component: PaisListComponent },
-            { path: 'paises/nuevo', component: PaisFormComponent },
             { path: 'roles', component: RolListComponent },
             { path: 'roles/nuevo', component: RolFormComponent },
             { path: 'roles/editar/:id', component: RolFormComponent },
             { path: 'depositos', component: DepositoListComponent },
             { path: 'depositos/nuevo', component: DepositoFormComponent },
             { path: 'depositos/editar/:id', component: DepositoFormComponent },
+            { path: 'paises', component: PaisListComponent },
+            { path: 'paises/nuevo', component: PaisFormComponent },
+            { path: 'paises/editar/:id', component: PaisFormComponent },
+            { path: 'departamentos', component: DepartamentoListComponent },
+            { path: 'departamentos/nuevo', component: DepartamentoFormComponent },
+            { path: 'departamentos/editar/:id', component: DepartamentoFormComponent },
             // ... otras rutas
           ]
         }

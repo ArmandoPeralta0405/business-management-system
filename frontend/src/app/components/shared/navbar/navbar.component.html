@@ -3,11 +3,26 @@
     <a class="navbar-brand" href="#">
       <i class="fas fa-cubes me-2"></i>BMS
     </a>
+    
+    <!-- Botón de pantalla completa visible siempre -->
+    <button class="btn btn-link nav-link d-lg-none me-2" (click)="toggleFullscreen()">
+      <i class="fas" [class.fa-expand]="!isFullscreen" [class.fa-compress]="isFullscreen"></i>
+    </button>
+    
     <button class="navbar-toggler" type="button" data-sidebar-toggle (click)="toggleSidebar()">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Botón de pantalla completa para desktop (dentro del collapse) -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item d-none d-lg-block">
+          <button class="nav-link btn btn-link" (click)="toggleFullscreen()">
+            <i class="fas" [class.fa-expand]="!isFullscreen" [class.fa-compress]="isFullscreen"></i>
+            <span class="ms-1 d-none d-sm-inline">Pantalla completa</span>
+          </button>
+        </li>
+        
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             <i class="fas fa-user-circle me-1"></i> Usuario

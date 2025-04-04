@@ -1,0 +1,85 @@
+<h2>Formulario de Departamentos</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2" [routerLink]="['/sistema_general/mantenimientos/departamentos']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <form [formGroup]="departamentoForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="id_pais" class="form-label">País</label>
+                    <select class="form-select" 
+                            id="id_pais" 
+                            formControlName="id_pais"
+                            [class.is-invalid]="departamentoForm.get('id_pais')?.invalid && (departamentoForm.get('id_pais')?.dirty || departamentoForm.get('id_pais')?.touched)">
+                        <option value="">Seleccione un país</option>
+                        <option *ngFor="let pais of paises" [value]="pais.id_pais">
+                            {{ pais.descripcion }}
+                        </option>
+                    </select>
+                    
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="departamentoForm.get('id_pais')?.invalid && (departamentoForm.get('id_pais')?.dirty || departamentoForm.get('id_pais')?.touched)"
+                         class="invalid-feedback">
+                        <div *ngIf="departamentoForm.get('id_pais')?.errors?.['required']">
+                            El país es requerido
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="descripcion" 
+                           formControlName="descripcion"
+                           [class.is-invalid]="departamentoForm.get('descripcion')?.invalid && (departamentoForm.get('descripcion')?.dirty || departamentoForm.get('descripcion')?.touched)"
+                           placeholder="Ingrese la descripción del departamento"
+                           autocomplete="off">
+                    
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="departamentoForm.get('descripcion')?.invalid && (departamentoForm.get('descripcion')?.dirty || departamentoForm.get('descripcion')?.touched)"
+                         class="invalid-feedback">
+                        <div *ngIf="departamentoForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="departamentoForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" 
+                        class="btn btn-outline-secondary" 
+                        [routerLink]="['/sistema_general/mantenimientos/departamentos']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" 
+                        class="btn btn-primary" 
+                        [disabled]="departamentoForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> 
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

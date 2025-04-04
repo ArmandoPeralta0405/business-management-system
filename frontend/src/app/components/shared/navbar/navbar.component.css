@@ -1,0 +1,45 @@
+/* Estilo para el botón de pantalla completa */
+.nav-link.btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    border: none;
+    background: transparent;
+  }
+  
+  .nav-link.btn:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  
+  /* Asegurar que el icono tenga espacio consistente */
+  .nav-link.btn i {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+  }
+
+  /* Estilos para el botón en móvil */
+.btn-fullscreen-mobile {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+  }
+  
+  .btn-fullscreen-mobile:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  
+  /* Asegurar que el navbar-toggler no se superponga */
+  .navbar-toggler {
+    order: 3; /* Coloca el botón del menú al final */
+  }
+  
+  /* Botón de pantalla completa en móvil */
+  .d-lg-none.me-2 {
+    order: 2; /* Coloca el botón de pantalla completa en medio */
+    margin-left: auto;
+  }

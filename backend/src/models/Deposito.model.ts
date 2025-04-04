@@ -14,7 +14,7 @@ export interface IDeposito {
   export abstract class DepositoModel {
     abstract getAll(): Promise<IDeposito[]>;
     abstract getById(id: number): Promise<IDeposito | null>;
-    abstract create(rolData: Omit<IDeposito, 'id_deposito'>): Promise<number>;
-    abstract update(id: number, rolData: Partial<IDeposito>): Promise<boolean>;
+    abstract create(depositoData: Omit<IDeposito, 'id_deposito'>): Promise<number>;
+    abstract update(id: number, depositoData: Partial<IDeposito>): Promise<boolean>;
     abstract delete(id: number): Promise<boolean>;
   }

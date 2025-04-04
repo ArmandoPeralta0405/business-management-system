@@ -13,8 +13,8 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
-  clave: string = '';
+  email: string = 'admin@gmail.com';
+  clave: string = 'admin';
   loading: boolean = false;
 
   constructor(

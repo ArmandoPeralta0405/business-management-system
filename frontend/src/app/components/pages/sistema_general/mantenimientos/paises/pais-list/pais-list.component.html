@@ -1,5 +1,18 @@
-<h2>Lista de Países</h2>
+<h2>Lista de Paises</h2>
 <div class="card mb-3">
+    <!-- Indicador de carga -->
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando paises...</p>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger m-3">
+        {{ errorMessage }}
+    </div>
+
     <div class="card-header bg-transparent">
         <div class="btn-group">
             <a class="btn btn-outline-success" [routerLink]="['/sistema_general/mantenimientos/paises/nuevo']"
@@ -43,11 +56,12 @@
             <table class="table table-sm table-hover table-striped rounded">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col" class="w-5">#</th>
-                        <th scope="col" class="w-10">Código</th>
-                        <th scope="col" class="w-50">Descripción</th>
-                        <th scope="col" class="w-10">Código SET</th>
-                        <th scope="col" class="text-center w-10">Acciones</th>
+                        <th scope="col" style="width: 5%">#</th> <!-- Columna más estrecha -->
+                        <th scope="col" style="width: 10%">Código</th>
+                        <th scope="col" style="width: 50%">Descripción</th> <!-- Columna más ancha -->
+                        <th scope="col" style="width: 30%">Nacionalidad</th> <!-- Columna más ancha -->
+                        <th scope="col" style="width: 5%">ISO 3</th> <!-- Columna más ancha -->
+                        <th scope="col" style="width: 15%" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,20 +71,37 @@
                         totalItems: filteredPaises.length 
                     }; let i = index">
                         <th scope="row">{{ (p - 1) * itemsPerPage + i + 1 }}</th>
-                        <td>{{ pais.codigo }}</td>
+                        <td>{{ pais.id_pais }}</td>
                         <td>{{ pais.descripcion }}</td>
-                        <td>{{ pais.codigoSET }}</td>
+                        <td>{{ pais.nacionalidad }}</td>
+                        <td>{{ pais.codigo_iso3 }}</td>
                         <td class="text-nowrap text-center">
-                            <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                <i class="fas fa-trash-alt"></i>
+                            <!-- Botón Editar -->
+                            <ng-container *ngIf="!isBeingDeleted(pais.id_pais!)">
+                                <a [routerLink]="['/sistema_general/mantenimientos/paises/editar', pais.id_pais]"
+                                    class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="isBeingDeleted(pais.id_pais!)">
+                                <span class="btn btn-sm btn-outline-primary me-1 disabled" title="Operación en curso">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                            </ng-container>
+
+                            <!-- Botón Eliminar -->
+                            <button (click)="eliminarPais(pais.id_pais!)" class="btn btn-sm btn-outline-danger"
+                                title="Eliminar" [disabled]="isBeingDeleted(pais.id_pais!)">
+                                <i class="fas fa-trash-alt" *ngIf="!isBeingDeleted(pais.id_pais!)"></i>
+                                <span class="spinner-border spinner-border-sm"
+                                    *ngIf="isBeingDeleted(pais.id_pais!)"></span>
                             </button>
                         </td>
                     </tr>
-                    <tr *ngIf="filteredPaises.length === 0">
-                        <td colspan="5" class="text-center text-muted py-3">No se encontraron resultados</td>
+                    <tr *ngIf="filteredPaises.length === 0 && !isLoading">
+                        <td colspan="4" class="text-center text-muted py-3">
+                            {{ paises.length === 0 ? 'No hay paises registrados' : 'No se encontraron resultados' }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
