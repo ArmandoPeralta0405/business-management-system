@@ -1,0 +1,27 @@
+{
+  "name": "business-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently -k -n \"BACKEND,FRONTEND\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && ng serve --host 0.0.0.0",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArmandoPeralta0405/business-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ArmandoPeralta0405/business-management-system/issues"
+  },
+  "homepage": "https://github.com/ArmandoPeralta0405/business-management-system#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

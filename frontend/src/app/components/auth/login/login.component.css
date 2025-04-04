@@ -1,0 +1,46 @@
+/* Contenedor principal (fondo rojo) */
+.login-wrapper {
+    width: 100%;
+    height: 100vh;
+    background-color: #7D161A; /* Color del sidebar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Tarjeta del login */
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Título */
+  .login-title {
+    color: #7D161A;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  
+  /* Inputs con focus personalizado */
+  .form-control:focus {
+    border-color: #7D161A;
+    box-shadow: 0 0 0 0.25rem rgba(125, 22, 26, 0.25);
+  }
+  
+  /* Botón personalizado */
+  .login-btn {
+    background-color: #7D161A;
+    border: none;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #5C1013;
+  }

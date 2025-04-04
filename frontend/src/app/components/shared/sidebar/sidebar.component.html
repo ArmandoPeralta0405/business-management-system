@@ -41,11 +41,35 @@
                     <i class="fas fa-flag me-2"></i> Países
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" 
+                    [routerLink]="['/sistema_general/mantenimientos/roles']" routerLinkActive="router-link-active" 
+                     routerLinkActive="active"
+                     (click)="closeOnMobile()">
+                    <i class="fas fa-flag me-2"></i> Roles
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" 
+                    [routerLink]="['/sistema_general/mantenimientos/depositos']" routerLinkActive="router-link-active" 
+                     routerLinkActive="active"
+                     (click)="closeOnMobile()">
+                    <i class="fas fa-flag me-2"></i> Depositos
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
         </div>
       </li>     
+
     </ul>
+    <!-- Agrega este ítem al final de tu menú -->
+  <li class="nav-item"> <!-- mt-auto lo coloca al final -->
+    <a class="nav-link" (click)="logout()" style="cursor: pointer;">
+      <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+    </a>
+  </li>
   </div>
+  
 </div>
