@@ -11,6 +11,8 @@ import { PaisListComponent } from './components/pages/sistema_general/mantenimie
 import { PaisFormComponent } from './components/pages/sistema_general/mantenimientos/paises/pais-form/pais-form.component';
 import { DepartamentoFormComponent } from './components/pages/sistema_general/mantenimientos/departamentos/departamento-form/departamento-form.component';
 import { DepartamentoListComponent } from './components/pages/sistema_general/mantenimientos/departamentos/departamento-list/departamento-list.component';
+import { CiudadFormComponent } from './components/pages/sistema_general/mantenimientos/ciudades/ciudad-form/ciudad-form.component';
+import { CiudadListComponent } from './components/pages/sistema_general/mantenimientos/ciudades/ciudad-list/ciudad-list.component';
 
 export const routes: Routes = [
     {
@@ -47,6 +49,9 @@ export const routes: Routes = [
             { path: 'departamentos', component: DepartamentoListComponent },
             { path: 'departamentos/nuevo', component: DepartamentoFormComponent },
             { path: 'departamentos/editar/:id', component: DepartamentoFormComponent },
+            { path: 'ciudades', component: CiudadListComponent },
+            { path: 'ciudades/nuevo', component: CiudadFormComponent },
+            { path: 'ciudades/editar/:id', component: CiudadFormComponent },
             // ... otras rutas
           ]
         }

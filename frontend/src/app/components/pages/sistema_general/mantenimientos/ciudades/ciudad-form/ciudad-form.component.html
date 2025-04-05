@@ -1,0 +1,111 @@
+<h2>Formulario de Ciudades</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/sistema_general/mantenimientos/ciudades']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="ciudadForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="id_departamento" class="form-label">Departamento</label>
+                    <select class="form-select" id="id_departamento" formControlName="id_departamento"
+                        [class.is-invalid]="ciudadForm.get('id_departamento')?.invalid && (ciudadForm.get('id_departamento')?.dirty || ciudadForm.get('id_departamento')?.touched)">
+                        <option value="">Seleccione un departamento</option>
+                        <option *ngFor="let departamento of departamentos" [value]="departamento.id_departamento">
+                            {{ departamento.descripcion }}
+                        </option>
+                    </select>
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="ciudadForm.get('id_departamento')?.invalid && (ciudadForm.get('id_departamento')?.dirty || ciudadForm.get('id_departamento')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="ciudadForm.get('id_departamento')?.errors?.['required']">
+                            El departamento es requerido
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                        [class.is-invalid]="ciudadForm.get('descripcion')?.invalid && (ciudadForm.get('descripcion')?.dirty || ciudadForm.get('descripcion')?.touched)"
+                        placeholder="Ingrese la descripción de la ciudad" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="ciudadForm.get('descripcion')?.invalid && (ciudadForm.get('descripcion')?.dirty || ciudadForm.get('descripcion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="ciudadForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="ciudadForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo para Capital (usando select) -->
+                <div class="col-md-12 mb-3">
+                    <label for="capital" class="form-label">¿Es capital?</label>
+                    <select class="form-select" id="capital" formControlName="capital"
+                        [class.is-invalid]="ciudadForm.get('capital')?.invalid && (ciudadForm.get('capital')?.dirty || ciudadForm.get('capital')?.touched)">
+                        <option value="0">No es capital</option>
+                        <option value="1">Es capital departamental</option>
+                    </select>
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="ciudadForm.get('capital')?.invalid && (ciudadForm.get('capital')?.dirty || ciudadForm.get('capital')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="ciudadForm.get('capital')?.errors?.['required']">
+                            Debe especificar si es capital
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo para Código Postal -->
+                <div class="col-md-12 mb-3">
+                    <label for="codigo_postal" class="form-label">Código Postal (Opcional)</label>
+                    <input type="text" class="form-control" id="codigo_postal" formControlName="codigo_postal"
+                        [class.is-invalid]="ciudadForm.get('codigo_postal')?.invalid && (ciudadForm.get('codigo_postal')?.dirty || ciudadForm.get('codigo_postal')?.touched)"
+                        placeholder="Ej: 1234" maxlength="10" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="ciudadForm.get('codigo_postal')?.invalid && (ciudadForm.get('codigo_postal')?.dirty || ciudadForm.get('codigo_postal')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="ciudadForm.get('codigo_postal')?.errors?.['maxlength']">
+                            Máximo 10 caracteres permitidos
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/sistema_general/mantenimientos/ciudades']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="ciudadForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
