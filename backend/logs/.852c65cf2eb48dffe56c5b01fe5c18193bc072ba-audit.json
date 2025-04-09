@@ -29,6 +29,26 @@
             "date": 1743858054749,
             "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-05.log",
             "hash": "570fa50221fc3125daad1a819f8c1794e6620a921f8121045414e3622747a719"
+        },
+        {
+            "date": 1743949754610,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-06.log",
+            "hash": "2317821101fb61d9a2ad4ac0cd362f37ee2811fe3eac7d6897f0c32079d11576"
+        },
+        {
+            "date": 1744033126932,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-07.log",
+            "hash": "6e7060ef465e4398ba9310457fa893f3fea333132c123bdf9a90e649068a497a"
+        },
+        {
+            "date": 1744113915039,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-08.log",
+            "hash": "6085ec3a71d29535e8688686221b35d8b11a02294de2d29ee102cd67bffb05d7"
+        },
+        {
+            "date": 1744227213930,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-09.log",
+            "hash": "9e19e14238de4c74a5f8df300c1de2a52c22be6907756c86cc7048f7dbf8cb6a"
         }
     ],
     "hashType": "sha256"

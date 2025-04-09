@@ -13,6 +13,10 @@ import { DepartamentoFormComponent } from './components/pages/sistema_general/ma
 import { DepartamentoListComponent } from './components/pages/sistema_general/mantenimientos/departamentos/departamento-list/departamento-list.component';
 import { CiudadFormComponent } from './components/pages/sistema_general/mantenimientos/ciudades/ciudad-form/ciudad-form.component';
 import { CiudadListComponent } from './components/pages/sistema_general/mantenimientos/ciudades/ciudad-list/ciudad-list.component';
+import { EmpresaFormComponent } from './components/pages/sistema_general/mantenimientos/empresas/empresa-form/empresa-form.component';
+import { EmpresaListComponent } from './components/pages/sistema_general/mantenimientos/empresas/empresa-list/empresa-list.component';
+import { SucursalFormComponent } from './components/pages/sistema_general/mantenimientos/sucursales/sucursal-form/sucursal-form.component';
+import { SucursalListComponent } from './components/pages/sistema_general/mantenimientos/sucursales/sucursal-list/sucursal-list.component';
 
 export const routes: Routes = [
     {
@@ -40,18 +44,31 @@ export const routes: Routes = [
             { path: 'roles', component: RolListComponent },
             { path: 'roles/nuevo', component: RolFormComponent },
             { path: 'roles/editar/:id', component: RolFormComponent },
+
             { path: 'depositos', component: DepositoListComponent },
             { path: 'depositos/nuevo', component: DepositoFormComponent },
             { path: 'depositos/editar/:id', component: DepositoFormComponent },
+
             { path: 'paises', component: PaisListComponent },
             { path: 'paises/nuevo', component: PaisFormComponent },
             { path: 'paises/editar/:id', component: PaisFormComponent },
+
             { path: 'departamentos', component: DepartamentoListComponent },
             { path: 'departamentos/nuevo', component: DepartamentoFormComponent },
             { path: 'departamentos/editar/:id', component: DepartamentoFormComponent },
+
             { path: 'ciudades', component: CiudadListComponent },
             { path: 'ciudades/nuevo', component: CiudadFormComponent },
             { path: 'ciudades/editar/:id', component: CiudadFormComponent },
+
+            { path: 'empresas', component: EmpresaListComponent },
+            { path: 'empresas/nuevo', component: EmpresaFormComponent },
+            { path: 'empresas/editar/:id', component: EmpresaFormComponent },
+
+            { path: 'sucursales', component: SucursalListComponent },
+            { path: 'sucursales/nuevo', component: SucursalFormComponent },
+            { path: 'sucursales/editar/:id_empresa/:id_sucursal', component: SucursalFormComponent },
+
             // ... otras rutas
           ]
         }

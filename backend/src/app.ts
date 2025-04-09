@@ -10,7 +10,8 @@ import AuthRoutes from './routes/Auth.routes';
 // Agrega esto justo después de los imports
 const allowedOrigins = [
   'http://localhost:4200',
-  'http://192.168.0.111:4200' // Agrega esta línea exactamente así
+  'http://192.168.0.111:4200',
+  'http://192.168.100.6:4200'
 ];
 
 const app = express(); 
@@ -49,7 +50,7 @@ app.get('/', (req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT} y http://192.168.0.111:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT} y ${API_BASE_URL}`);
 })
 
 export default app;

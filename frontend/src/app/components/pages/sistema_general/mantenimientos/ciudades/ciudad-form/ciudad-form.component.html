@@ -60,28 +60,17 @@
                     </div>
                 </div>
 
-                <!-- Campo para Capital (usando select) -->
-                <div class="col-md-12 mb-3">
-                    <label for="capital" class="form-label">¿Es capital?</label>
-                    <select class="form-select" id="capital" formControlName="capital"
-                        [class.is-invalid]="ciudadForm.get('capital')?.invalid && (ciudadForm.get('capital')?.dirty || ciudadForm.get('capital')?.touched)">
-                        <option value="0">No es capital</option>
-                        <option value="1">Es capital departamental</option>
-                    </select>
-
-                    <!-- Mensajes de validación -->
-                    <div *ngIf="ciudadForm.get('capital')?.invalid && (ciudadForm.get('capital')?.dirty || ciudadForm.get('capital')?.touched)"
-                        class="invalid-feedback">
-                        <div *ngIf="ciudadForm.get('capital')?.errors?.['required']">
-                            Debe especificar si es capital
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="capital" formControlName="capital">
+                        <label class="form-check-label" for="capital">Capital departamental</label>
                     </div>
                 </div>
 
                 <!-- Campo para Código Postal -->
                 <div class="col-md-12 mb-3">
                     <label for="codigo_postal" class="form-label">Código Postal (Opcional)</label>
-                    <input type="text" class="form-control" id="codigo_postal" formControlName="codigo_postal"
+                    <input type="number" class="form-control" id="codigo_postal" formControlName="codigo_postal"
                         [class.is-invalid]="ciudadForm.get('codigo_postal')?.invalid && (ciudadForm.get('codigo_postal')?.dirty || ciudadForm.get('codigo_postal')?.touched)"
                         placeholder="Ej: 1234" maxlength="10" autocomplete="off">
 

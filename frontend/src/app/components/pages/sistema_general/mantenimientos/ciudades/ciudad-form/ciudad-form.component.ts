@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CiudadService } from '../../../../../../services/tables/ciudad.service';
 import { DepartamentoService } from '../../../../../../services/tables/departamento.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ICiudad } from '../../../../../../models/ciudad.model';
 import { IDepartamento } from '../../../../../../models/departamento.model';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ciudad-form',
-  imports: [RouterLink, ReactiveFormsModule, NgIf, CommonModule],
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './ciudad-form.component.html',
   styleUrl: './ciudad-form.component.css'
 })
@@ -34,7 +34,7 @@ export class CiudadFormComponent implements OnInit {
     this.ciudadForm = this.fb.group({
       id_departamento: ['', [Validators.required]],
       descripcion: ['', [Validators.required, Validators.maxLength(100)]],
-      capital: [0, [Validators.required]],
+      capital: [false], // Cambiado a boolean
       codigo_postal: ['', [Validators.maxLength(10)]]
     });
   }
@@ -71,8 +71,8 @@ export class CiudadFormComponent implements OnInit {
         this.ciudadForm.patchValue({
           id_departamento: ciudad.id_departamento,
           descripcion: ciudad.descripcion,
-          capital: ciudad.capital, // Se mantiene igual (0 o 1)
-          codigo_postal: ciudad.codigo_postal || '' // Nuevo campo
+          capital: ciudad.capital, // Convertir 1/0 a true/false
+          codigo_postal: ciudad.codigo_postal || ''
         });
         this.isLoading = false;
       },
@@ -92,7 +92,10 @@ export class CiudadFormComponent implements OnInit {
     }
   
     this.isLoading = true;
-    const ciudadData = this.ciudadForm.value;
+    const ciudadData = {
+      ...this.ciudadForm.value,
+      capital: this.ciudadForm.value.capital ? 1 : 0 // Convertir true/false a 1/0
+    };
   
     const operation$ = this.isEditMode && this.ciudadId
       ? this.ciudadService.update(this.ciudadId, ciudadData)
@@ -115,6 +118,7 @@ export class CiudadFormComponent implements OnInit {
     });
   }
 
+  // Resto de los métodos permanecen igual...
   private markFormFieldsAsTouched(): void {
     Object.values(this.ciudadForm.controls).forEach(control => {
       control.markAsTouched();
