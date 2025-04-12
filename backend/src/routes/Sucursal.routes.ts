@@ -5,6 +5,7 @@ const router = Router();
 const controller = new SucursalController();
 
 router.get('/', controller.getAll);
+router.get('/:id_empresa', controller.getByEmpresa);
 router.get('/:id_empresa/:id_sucursal', controller.getById);
 router.post('/', controller.create);
 router.put('/:id_empresa/:id_sucursal', controller.update);

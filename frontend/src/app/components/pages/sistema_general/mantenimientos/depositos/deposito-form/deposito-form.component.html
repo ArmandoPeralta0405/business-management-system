@@ -43,6 +43,40 @@
                         </div>
                     </div>
                 </div>
+
+<!-- Sección de Empresa -->
+<div class="col-md-6 mb-3">
+  <label for="id_empresa" class="form-label">Empresa</label>
+  <select class="form-select" 
+          id="id_empresa" 
+          formControlName="id_empresa"
+          [class.is-invalid]="depositoForm.get('id_empresa')?.invalid && (depositoForm.get('id_empresa')?.dirty || depositoForm.get('id_empresa')?.touched)">
+    <option value="" disabled selected>Seleccione una empresa</option>
+    <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">
+      {{ empresa.razon_social }}
+    </option>
+  </select>
+  <!-- Mensajes de validación... -->
+</div>
+
+<!-- Sección de Sucursal (ahora usa filteredSucursales) -->
+<div class="col-md-6 mb-3">
+  <label for="id_sucursal" class="form-label">Sucursal</label>
+  <select class="form-select" 
+          id="id_sucursal" 
+          formControlName="id_sucursal"
+          [disabled]="!depositoForm.get('id_empresa')?.value || isLoading"
+          [class.is-invalid]="depositoForm.get('id_sucursal')?.invalid && (depositoForm.get('id_sucursal')?.dirty || depositoForm.get('id_sucursal')?.touched)">
+    <option value="" disabled selected>Seleccione una sucursal</option>
+    <option *ngFor="let sucursal of filteredSucursales" [value]="sucursal.id_sucursal">
+      {{ sucursal.descripcion }}
+    </option>
+    <option *ngIf="depositoForm.get('id_empresa')?.value && filteredSucursales.length === 0" disabled>
+      No hay sucursales para esta empresa
+    </option>
+  </select>
+  <!-- Mensajes de validación... -->
+</div>
             </div>
 
             <!-- Botones de acción -->

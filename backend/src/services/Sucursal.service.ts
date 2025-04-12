@@ -3,10 +3,19 @@ import pool from '../config/database';
 import { RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 
 export class SucursalService extends SucursalModel {
+
   async getAll(): Promise<ISucursalView[]> {
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM sucursal_view');
     return rows as ISucursalView[];
   }
+
+  async getByEmpresa(id_empresa: number): Promise<ISucursalView[]> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        'SELECT * FROM sucursal_view WHERE id_empresa = ?',
+        [id_empresa]
+    );
+    return rows as ISucursalView[];
+}
 
   async getById(id_sucursal: number, id_empresa: number): Promise<ISucursal | null> {
     const [rows] = await pool.query<RowDataPacket[]>(

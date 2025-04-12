@@ -14,6 +14,26 @@ export class SucursalController {
     }
   }
 
+  async getByEmpresa(req: Request | any, res: Response | any) {
+    try {
+        const id_empresa = parseInt(req.params.id_empresa);
+        
+        // Validación del parámetro
+        if (isNaN(id_empresa)) {
+            return res.status(400).json({ error: 'ID de empresa inválido' });
+        }
+
+        const sucursales = await sucursalService.getByEmpresa(id_empresa);
+        res.json(sucursales);
+    } catch (error) {
+        console.error('Error al obtener sucursales por empresa:', error);
+        res.status(500).json({ 
+            error: 'Error al obtener sucursales por empresa',
+            details: error instanceof Error ? error.message : String(error)
+        });
+    }
+}
+
   async getById(req: Request, res: Response) {
     try {
       const { id_sucursal, id_empresa } = req.params;

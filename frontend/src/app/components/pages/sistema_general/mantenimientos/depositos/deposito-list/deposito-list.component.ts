@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DepositoService } from '../../../../../../services/tables/deposito.service';
-import { IDeposito } from '../../../../../../models/deposito.model';
+import { IDeposito, IDepositoView } from '../../../../../../models/deposito.model';
 import Swal from 'sweetalert2';
 
 
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class DepositoListComponent {
 
-  depositos: IDeposito[] = [];
+  depositos: IDepositoView[] = [];
   p: number = 1;
   itemsPerPage: number = 5;
   searchText: string = '';
@@ -49,12 +49,14 @@ export class DepositoListComponent {
       });
     }
   
-    get filteredDepositos(): IDeposito[] {
+    get filteredDepositos(): IDepositoView[] {
       if (!this.searchText) {
         return this.depositos;
       }
       return this.depositos.filter(deposito => 
         deposito.descripcion.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        deposito.sucursal_descripcion.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        deposito.empresa_descripcion.toLowerCase().includes(this.searchText.toLowerCase()) ||
         (deposito.id_deposito && deposito.id_deposito.toString().includes(this.searchText))
       );
     }

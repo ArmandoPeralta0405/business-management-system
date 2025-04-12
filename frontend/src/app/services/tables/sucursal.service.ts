@@ -17,6 +17,11 @@ export class SucursalService {
   getAll(): Observable<ISucursalView[]> {
     return this.http.get<ISucursalView[]>(this.apiUrl);
   }
+
+  getByEmpresa(id_empresa: number): Observable<ISucursalView[]> {
+    return this.http.get<ISucursalView[]>(`${this.apiUrl}/${id_empresa}`);
+  }
+
   getById(id_empresa: number, id_sucursal: number): Observable<ISucursal> {
     return this.http.get<ISucursal>(`${this.apiUrl}/${id_empresa}/${id_sucursal}`);
   }
