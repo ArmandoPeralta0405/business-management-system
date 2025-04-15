@@ -60,23 +60,38 @@
 </div>
 
 <!-- Sección de Sucursal (ahora usa filteredSucursales) -->
+<!-- Campo Sucursal -->
 <div class="col-md-6 mb-3">
-  <label for="id_sucursal" class="form-label">Sucursal</label>
-  <select class="form-select" 
-          id="id_sucursal" 
-          formControlName="id_sucursal"
-          [disabled]="!depositoForm.get('id_empresa')?.value || isLoading"
-          [class.is-invalid]="depositoForm.get('id_sucursal')?.invalid && (depositoForm.get('id_sucursal')?.dirty || depositoForm.get('id_sucursal')?.touched)">
-    <option value="" disabled selected>Seleccione una sucursal</option>
-    <option *ngFor="let sucursal of filteredSucursales" [value]="sucursal.id_sucursal">
-      {{ sucursal.descripcion }}
-    </option>
-    <option *ngIf="depositoForm.get('id_empresa')?.value && filteredSucursales.length === 0" disabled>
-      No hay sucursales para esta empresa
-    </option>
-  </select>
-  <!-- Mensajes de validación... -->
-</div>
+    <label for="id_sucursal" class="form-label">Sucursal</label>
+    
+    <div *ngIf="depositoForm.get('id_empresa')?.value; else noEmpresaSelected">
+      <select class="form-select" 
+              id="id_sucursal" 
+              formControlName="id_sucursal"
+              [class.is-invalid]="depositoForm.get('id_sucursal')?.invalid && 
+                               (depositoForm.get('id_sucursal')?.dirty || 
+                                depositoForm.get('id_sucursal')?.touched)">
+        <option value="" disabled selected>
+          {{ filteredSucursales.length === 0 ? 'Cargando sucursales...' : 'Seleccione una sucursal' }}
+        </option>
+        <option *ngFor="let sucursal of filteredSucursales" 
+                [value]="sucursal.id_sucursal">
+          {{ sucursal.descripcion }}
+        </option>
+        <option *ngIf="filteredSucursales.length === 0" disabled>
+          No hay sucursales disponibles para esta empresa
+        </option>
+      </select>
+    </div>
+    
+    <ng-template #noEmpresaSelected>
+      <select class="form-select" disabled>
+        <option selected>Primero seleccione una empresa</option>
+      </select>
+    </ng-template>
+    
+    <!-- Mensajes de validación... -->
+  </div>
             </div>
 
             <!-- Botones de acción -->

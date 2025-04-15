@@ -1,0 +1,100 @@
+<h2>Formulario de Módulos</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/sistema_general/mantenimientos/modulos']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="moduloForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                        [class.is-invalid]="moduloForm.get('descripcion')?.invalid && (moduloForm.get('descripcion')?.dirty || moduloForm.get('descripcion')?.touched)"
+                        placeholder="Ingrese el nombre del módulo" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="moduloForm.get('descripcion')?.invalid && (moduloForm.get('descripcion')?.dirty || moduloForm.get('descripcion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="moduloForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="moduloForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="icono" class="form-label">Icono</label>
+                    <div class="input-group">
+                        <select class="form-select" id="icono" formControlName="icono"
+                                [class.is-invalid]="moduloForm.get('icono')?.invalid && (moduloForm.get('icono')?.dirty || moduloForm.get('icono')?.touched)">
+                            <option *ngFor="let icon of faIcons" [value]="icon.class">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas {{icon.class}} me-2"></i> {{icon.name}}
+                                </span>
+                            </option>
+                        </select>
+                        <span class="input-group-text">
+                            <i class="fas {{moduloForm.get('icono')?.value || 'fa-folder'}}"></i>
+                        </span>
+                    </div>
+                    <small class="text-muted">Seleccione un icono de la lista o explore más en <a href="https://fontawesome.com/icons?d=gallery&p=2&m=free" target="_blank">FontAwesome</a>.</small>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="orden" class="form-label">Orden</label>
+                    <input type="number" class="form-control" id="orden" formControlName="orden"
+                        [class.is-invalid]="moduloForm.get('orden')?.invalid && (moduloForm.get('orden')?.dirty || moduloForm.get('orden')?.touched)"
+                        min="0" placeholder="Orden en el menú">
+                    
+                    <div *ngIf="moduloForm.get('orden')?.invalid && (moduloForm.get('orden')?.dirty || moduloForm.get('orden')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="moduloForm.get('orden')?.errors?.['required']">
+                            El orden es requerido
+                        </div>
+                        <div *ngIf="moduloForm.get('orden')?.errors?.['min']">
+                            El valor mínimo es 0
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+                        <label class="form-check-label" for="estado">Activo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/sistema_general/mantenimientos/modulos']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="moduloForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

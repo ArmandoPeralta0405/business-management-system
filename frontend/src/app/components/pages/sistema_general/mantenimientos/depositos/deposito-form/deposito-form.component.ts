@@ -63,27 +63,33 @@ export class DepositoFormComponent implements OnInit {
   // Nuevo método para cargar sucursales filtradas por empresa
   updateSucursales(empresaId: number): void {
     if (empresaId) {
-      this.isLoading = true;
+      // Solo mostramos loading en el campo de sucursal, no en todo el componente
+      this.depositoForm.get('id_sucursal')?.disable();
+      
       this.sucursalService.getByEmpresa(empresaId).subscribe({
         next: (data) => {
-          this.filteredSucursales = data;
-          this.isLoading = false;
+          // Usamos spread operator para mantener la referencia si los datos son iguales
+          this.filteredSucursales = [...data];
           
-          // Validar si la sucursal actual pertenece a la empresa seleccionada
+          // Habilitamos el campo después de cargar
+          this.depositoForm.get('id_sucursal')?.enable();
+          
+          // Mantenemos el valor seleccionado si existe en las nuevas sucursales
           const currentSucursalId = this.depositoForm.get('id_sucursal')?.value;
-          if (currentSucursalId && !this.filteredSucursales.some(s => s.id_sucursal == currentSucursalId)) {
+          if (currentSucursalId && !data.some(s => s.id_sucursal == currentSucursalId)) {
             this.depositoForm.get('id_sucursal')?.setValue('');
           }
         },
         error: (error) => {
           console.error('Error loading sucursales:', error);
-          this.isLoading = false;
+          this.depositoForm.get('id_sucursal')?.enable();
           this.showError('Error al cargar las sucursales');
         }
       });
     } else {
       this.filteredSucursales = [];
       this.depositoForm.get('id_sucursal')?.setValue('');
+      this.depositoForm.get('id_sucursal')?.disable();
     }
   }
 
@@ -106,19 +112,16 @@ export class DepositoFormComponent implements OnInit {
     this.isLoading = true;
     this.depositoService.getById(id).subscribe({
       next: (deposito) => {
-        // Primero establecemos la empresa para activar la carga de sucursales
+        // Establecemos empresa y sucursal juntas para evitar parpadeo
         this.depositoForm.patchValue({
           descripcion: deposito.descripcion,
-          id_empresa: deposito.id_empresa
-        });
+          id_empresa: deposito.id_empresa,
+          id_sucursal: deposito.id_sucursal
+        }, { emitEvent: false }); // Importante: no emitir eventos
         
-        // Después de que se carguen las sucursales, establecemos el valor
-        setTimeout(() => {
-          this.depositoForm.patchValue({
-            id_sucursal: deposito.id_sucursal
-          });
-          this.isLoading = false;
-        }, 100);
+        // Forzamos la carga de sucursales sin esperar al valueChanges
+        this.updateSucursales(deposito.id_empresa);
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading deposito:', error);

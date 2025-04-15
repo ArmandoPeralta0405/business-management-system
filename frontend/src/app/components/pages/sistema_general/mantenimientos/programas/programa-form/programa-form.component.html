@@ -1,0 +1,96 @@
+<h2>{{ formTitle }}</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/sistema_general/mantenimientos/programas']">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="programaForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="id_modulo" class="form-label">Módulo</label>
+                    <select class="form-select" id="id_modulo" formControlName="id_modulo"
+                        [class.is-invalid]="programaForm.get('id_modulo')?.invalid && (programaForm.get('id_modulo')?.dirty || programaForm.get('id_modulo')?.touched)">
+                        <option value="">Seleccione un módulo</option>
+                        <option *ngFor="let modulo of modulos" [value]="modulo.id_modulo">
+                            {{ modulo.descripcion }}
+                        </option>
+                    </select>
+                    <div *ngIf="programaForm.get('id_modulo')?.invalid && (programaForm.get('id_modulo')?.dirty || programaForm.get('id_modulo')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="programaForm.get('id_modulo')?.errors?.['required']">
+                            El módulo es requerido
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" formControlName="nombre"
+                        [class.is-invalid]="programaForm.get('nombre')?.invalid && (programaForm.get('nombre')?.dirty || programaForm.get('nombre')?.touched)"
+                        placeholder="Ingrese el nombre" maxlength="100" autocomplete="off">
+                    <div *ngIf="programaForm.get('nombre')?.invalid && (programaForm.get('nombre')?.dirty || programaForm.get('nombre')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="programaForm.get('nombre')?.errors?.['required']">
+                            El nombre es requerido
+                        </div>
+                        <div *ngIf="programaForm.get('nombre')?.errors?.['maxlength']">
+                            Máximo 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="ruta" class="form-label">Ruta</label>
+                    <input type="text" class="form-control" id="ruta" formControlName="ruta"
+                        [class.is-invalid]="programaForm.get('ruta')?.invalid && (programaForm.get('ruta')?.dirty || programaForm.get('ruta')?.touched)"
+                        placeholder="Ingrese la ruta" maxlength="200" autocomplete="off">
+                    <div *ngIf="programaForm.get('ruta')?.invalid && (programaForm.get('ruta')?.dirty || programaForm.get('ruta')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="programaForm.get('ruta')?.errors?.['required']">
+                            La ruta es requerida
+                        </div>
+                        <div *ngIf="programaForm.get('ruta')?.errors?.['maxlength']">
+                            Máximo 200 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+                        <label class="form-check-label" for="estado">Activo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/sistema_general/mantenimientos/programas']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="programaForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

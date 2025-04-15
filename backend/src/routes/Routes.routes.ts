@@ -8,6 +8,8 @@ import departamentoRoutes from '../routes/Departamento.routes';
 import ciudadRoutes from '../routes/Ciudad.routes';
 import empresaRoutes from '../routes/Empresa.routes'; 
 import sucursalRoutes from '../routes/Sucursal.routes'; 
+import moduloRoutes from '../routes/Modulo.routes'; 
+import programaRoutes from '../routes/Programa.routes'; 
 
 
 const router = Router();
@@ -21,6 +23,7 @@ router.use('/departamentos', authenticate, departamentoRoutes); // Todas las rut
 router.use('/ciudades', authenticate, ciudadRoutes); // Todas las rutas de las ciudades empezarán con /ciudades
 router.use('/empresas', authenticate, empresaRoutes); // Todas las rutas de las empresas empezarán con /empresas
 router.use('/sucursales', authenticate, sucursalRoutes); // Todas las rutas de las sucursales empezarán con /sucursales
-
+router.use('/modulos', authenticate, moduloRoutes); // Todas las rutas de los modulos empezarán con /modulos
+router.use('/programas', authenticate, programaRoutes); // Todas las rutas de los programas empezarán con /programas
 // Exporta el router configurado
 export default router;

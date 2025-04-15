@@ -17,6 +17,10 @@ import { EmpresaFormComponent } from './components/pages/sistema_general/manteni
 import { EmpresaListComponent } from './components/pages/sistema_general/mantenimientos/empresas/empresa-list/empresa-list.component';
 import { SucursalFormComponent } from './components/pages/sistema_general/mantenimientos/sucursales/sucursal-form/sucursal-form.component';
 import { SucursalListComponent } from './components/pages/sistema_general/mantenimientos/sucursales/sucursal-list/sucursal-list.component';
+import { ModuloFormComponent } from './components/pages/sistema_general/mantenimientos/modulos/modulo-form/modulo-form.component';
+import { ModuloListComponent } from './components/pages/sistema_general/mantenimientos/modulos/modulo-list/modulo-list.component';
+import { ProgramaFormComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-form/programa-form.component';
+import { ProgramaListComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-list/programa-list.component';
 
 export const routes: Routes = [
     {
@@ -68,6 +72,14 @@ export const routes: Routes = [
             { path: 'sucursales', component: SucursalListComponent },
             { path: 'sucursales/nuevo', component: SucursalFormComponent },
             { path: 'sucursales/editar/:id_empresa/:id_sucursal', component: SucursalFormComponent },
+
+            { path: 'modulos', component: ModuloListComponent },
+            { path: 'modulos/nuevo', component: ModuloFormComponent },
+            { path: 'modulos/editar/:id', component: ModuloFormComponent },
+
+            { path: 'programas', component: ProgramaListComponent },
+            { path: 'programas/nuevo', component: ProgramaFormComponent },
+            { path: 'programas/editar/:id', component: ProgramaFormComponent },
 
             // ... otras rutas
           ]
