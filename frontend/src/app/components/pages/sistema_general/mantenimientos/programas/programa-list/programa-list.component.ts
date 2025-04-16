@@ -57,6 +57,7 @@ export class ProgramaListComponent {
     return this.programas.filter(programa => 
       programa.nombre.toLowerCase().includes(searchTextLower) ||
       programa.ruta.toLowerCase().includes(searchTextLower) ||
+      programa.categoria_programa_descripcion.toLowerCase().includes(searchTextLower) ||
       programa.modulo_descripcion.toLowerCase().includes(searchTextLower)
     );
   }

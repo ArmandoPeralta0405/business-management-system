@@ -8,6 +8,7 @@ export interface IPrograma {
     nombre: string;
     ruta: string;
     estado: boolean;
+    id_categoria: number;
 }
 
 export interface IProgramaView {
@@ -17,6 +18,8 @@ export interface IProgramaView {
   nombre: string;
   ruta: string;
   estado: boolean;
+  id_categoria: number;
+  categoria_programa_descripcion: string;
 }
   
   /**

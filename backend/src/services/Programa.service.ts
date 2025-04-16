@@ -18,16 +18,16 @@ export class ProgramaService extends ProgramaModel {
 
   async create(programaData: Omit<IPrograma, 'id_programa'>): Promise<number> {
     const [result] = await pool.query<ResultSetHeader>(
-      'INSERT INTO programa (id_modulo, nombre, ruta, estado) VALUES (?, ?, ?, ?)',
-      [programaData.id_modulo, programaData.nombre, programaData.ruta, programaData.estado]
+      'INSERT INTO programa (id_modulo, nombre, ruta, estado, id_categoria) VALUES (?, ?, ?, ?, ?)',
+      [programaData.id_modulo, programaData.nombre, programaData.ruta, programaData.estado, programaData.id_categoria]
     );
     return result.insertId;
   }
 
   async update(id: number, programaData: Partial<IPrograma>): Promise<boolean> {
     const [result] = await pool.query<ResultSetHeader>(
-      'UPDATE programa SET id_modulo = ?, nombre = ?, ruta = ?, estado = ? WHERE id_programa = ?',
-      [programaData.id_modulo, programaData.nombre, programaData.ruta, programaData.estado, id]
+      'UPDATE programa SET id_modulo = ?, nombre = ?, ruta = ?, estado = ?, id_categoria = ? WHERE id_programa = ?',
+      [programaData.id_modulo, programaData.nombre, programaData.ruta, programaData.estado, programaData.id_categoria, id]
     );
     return result.affectedRows > 0;
   }

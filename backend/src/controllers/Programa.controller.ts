@@ -29,7 +29,8 @@ export class ProgramaController {
         id_modulo: req.body.id_modulo,
         nombre: req.body.nombre,
         ruta: req.body.ruta,
-        estado: req.body.estado
+        estado: req.body.estado,
+        id_categoria: req.body.id_categoria
       };
       const id = await programaService.create(newPrograma);
       res.status(201).json({ id });

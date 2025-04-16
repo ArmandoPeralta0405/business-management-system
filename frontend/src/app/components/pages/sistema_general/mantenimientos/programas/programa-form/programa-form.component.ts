@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ProgramaService } from '../../../../../../services/tables/programa.service';
 import { ModuloService } from '../../../../../../services/tables/modulo.service';
+import { CategoriaProgramaService } from '../../../../../../services/tables/categoria_programa.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IPrograma } from '../../../../../../models/programa.model';
 import { IModuloView } from '../../../../../../models/modulo.model';
+import { ICategoriaPrograma } from '../../../../../../models/categoria_programa.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,11 +25,13 @@ export class ProgramaFormComponent implements OnInit {
   isLoading = false;
   formTitle: string = 'Nuevo Programa';
   modulos: IModuloView[] = [];
+  categorias: ICategoriaPrograma[] = [];
 
   constructor(
     private fb: FormBuilder,
     private programaService: ProgramaService,
     private moduloService: ModuloService,
+    private categoriaProgramaService: CategoriaProgramaService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -36,13 +40,15 @@ export class ProgramaFormComponent implements OnInit {
       id_modulo: ['', [Validators.required]],
       nombre: ['', [Validators.required, Validators.maxLength(100)]],
       ruta: ['', [Validators.required, Validators.maxLength(200)]],
-      estado: [true, [Validators.required]]
+      estado: [true, [Validators.required]],
+      id_categoria: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
     
     this.loadModulos();
+    this.loadCategoria();
 
     this.route.paramMap.subscribe(params => {
       const idPrograma = params.get('id');
@@ -68,6 +74,18 @@ export class ProgramaFormComponent implements OnInit {
     });
   }
 
+  loadCategoria(): void {
+    this.categoriaProgramaService.getAll().subscribe({
+      next: (data) => {
+        this.categorias = data;
+      },
+      error: (error) => {
+        console.error('Error loading categorias de programas:', error);
+        this.showError('Error al cargar las categorías de programas');
+      }
+    });
+  }
+
   loadProgramaData(idPrograma: number): void {
     
     this.isLoading = true;
@@ -78,7 +96,8 @@ export class ProgramaFormComponent implements OnInit {
           id_modulo: programa.id_modulo,
           nombre: programa.nombre,
           ruta: programa.ruta,
-          estado: programa.estado
+          estado: programa.estado,
+          id_categoria: programa.id_categoria
         });
         this.isLoading = false;
       },

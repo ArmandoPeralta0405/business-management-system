@@ -78,6 +78,23 @@
                         <label class="form-check-label" for="estado">Activo</label>
                     </div>
                 </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="id_categoria" class="form-label">Categorias de Programas</label>
+                    <select class="form-select" id="id_categoria" formControlName="id_categoria"
+                        [class.is-invalid]="programaForm.get('id_categoria')?.invalid && (programaForm.get('id_categoria')?.dirty || programaForm.get('id_categoria')?.touched)">
+                        <option value="">Seleccione una categoría</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria_programa">
+                            {{ categoria.descripcion }}
+                        </option>
+                    </select>
+                    <div *ngIf="programaForm.get('id_categoria')?.invalid && (programaForm.get('id_categoria')?.dirty || programaForm.get('id_categoria')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="programaForm.get('id_categoria')?.errors?.['required']">
+                            La categoría es requerida
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Botones de acción -->
