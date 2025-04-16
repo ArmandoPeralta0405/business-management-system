@@ -6,69 +6,9 @@
     "auditLog": "D:\\Proyectos\\business-management-system\\backend\\logs\\.852c65cf2eb48dffe56c5b01fe5c18193bc072ba-audit.json",
     "files": [
         {
-            "date": 1743536764160,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-01.log",
-            "hash": "48282c0ea7b113968cbb419c7dd2d17be41348b6f789b3cb0fb2e99be1921af9"
-        },
-        {
-            "date": 1743603166242,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-02.log",
-            "hash": "5d19d1bedcc584f78c82583d59acad9d460d0ddf7f2fe843e40e3297fb28116b"
-        },
-        {
-            "date": 1743680887276,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-03.log",
-            "hash": "ac7b553b021f7c355483ed8a609d3532d56045ba9d052efbd98faa82594d0d72"
-        },
-        {
-            "date": 1743775447773,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-04.log",
-            "hash": "297c6588c0ee0b2bebbb89ed376c0aa6aeee31e989eaeaa200d3068f6d1232b4"
-        },
-        {
-            "date": 1743858054749,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-05.log",
-            "hash": "570fa50221fc3125daad1a819f8c1794e6620a921f8121045414e3622747a719"
-        },
-        {
-            "date": 1743949754610,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-06.log",
-            "hash": "2317821101fb61d9a2ad4ac0cd362f37ee2811fe3eac7d6897f0c32079d11576"
-        },
-        {
-            "date": 1744033126932,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-07.log",
-            "hash": "6e7060ef465e4398ba9310457fa893f3fea333132c123bdf9a90e649068a497a"
-        },
-        {
-            "date": 1744113915039,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-08.log",
-            "hash": "6085ec3a71d29535e8688686221b35d8b11a02294de2d29ee102cd67bffb05d7"
-        },
-        {
-            "date": 1744227213930,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-09.log",
-            "hash": "9e19e14238de4c74a5f8df300c1de2a52c22be6907756c86cc7048f7dbf8cb6a"
-        },
-        {
-            "date": 1744459547095,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-12.log",
-            "hash": "d4c42f831cc8dc593ce75ceb860888f3e2d76adf292802b065e9ba343ac8224f"
-        },
-        {
-            "date": 1744590082345,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-13.log",
-            "hash": "f1c307a1035e46ba4417452ce5815e00c01c311a7393a1ffb610cf4bd223fcaa"
-        },
-        {
-            "date": 1744671906530,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-14.log",
-            "hash": "eeb315091eb78f48cc3cbdb3ab323bb45b99dd8070f80df2143edae82a4ca116"
-        },
-        {
-            "date": 1744741781347,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-15.log",
-            "hash": "9b47aca4b1149e9f11515fc75c1ab06a14a5e5837f8c1d94cb98dbecc36829fb"
+            "date": 1744810474484,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-16.log",
+            "hash": "baf4db2dd62fa368d7330b2e0104714729b021eedd7bcbd7a1372df4f483d613"
         }
     ],
     "hashType": "sha256"

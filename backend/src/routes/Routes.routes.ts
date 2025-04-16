@@ -10,6 +10,7 @@ import empresaRoutes from '../routes/Empresa.routes';
 import sucursalRoutes from '../routes/Sucursal.routes'; 
 import moduloRoutes from '../routes/Modulo.routes'; 
 import programaRoutes from '../routes/Programa.routes'; 
+import categoriaProgramaRoutes from '../routes/CategoriaPrograma.routes'; 
 
 
 const router = Router();
@@ -25,5 +26,6 @@ router.use('/empresas', authenticate, empresaRoutes); // Todas las rutas de las 
 router.use('/sucursales', authenticate, sucursalRoutes); // Todas las rutas de las sucursales empezarán con /sucursales
 router.use('/modulos', authenticate, moduloRoutes); // Todas las rutas de los modulos empezarán con /modulos
 router.use('/programas', authenticate, programaRoutes); // Todas las rutas de los programas empezarán con /programas
+router.use('/categorias_programas', authenticate, categoriaProgramaRoutes); // Todas las rutas de las categorias de programas empezarán con /categorias_programas
 // Exporta el router configurado
 export default router;

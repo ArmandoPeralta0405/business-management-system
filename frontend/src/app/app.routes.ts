@@ -21,6 +21,8 @@ import { ModuloFormComponent } from './components/pages/sistema_general/mantenim
 import { ModuloListComponent } from './components/pages/sistema_general/mantenimientos/modulos/modulo-list/modulo-list.component';
 import { ProgramaFormComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-form/programa-form.component';
 import { ProgramaListComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-list/programa-list.component';
+import { CategoriaProgramaListComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-list/categoria-programa-list.component';
+import { CategoriaProgramaFormComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-form/categoria-programa-form.component';
 
 export const routes: Routes = [
     {
@@ -80,6 +82,10 @@ export const routes: Routes = [
             { path: 'programas', component: ProgramaListComponent },
             { path: 'programas/nuevo', component: ProgramaFormComponent },
             { path: 'programas/editar/:id', component: ProgramaFormComponent },
+
+            { path: 'categorias-programas', component: CategoriaProgramaListComponent },
+            { path: 'categorias-programas/nuevo', component: CategoriaProgramaFormComponent },
+            { path: 'categorias-programas/editar/:id', component: CategoriaProgramaFormComponent },
 
             // ... otras rutas
           ]
