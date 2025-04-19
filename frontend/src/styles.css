@@ -50,6 +50,11 @@ app-main {
   border-left: 3px solid #0d6efd;
 }
 
+/* Ajuste específico para el ancho del sidebar */
+.sidebar.custom-width {
+  width: 300px; /* Cambia este valor según el ancho deseado */
+}
+
 /* Contenido principal */
 .main-content {
   flex: 1;
@@ -113,6 +118,11 @@ app-footer {
   
   .navbar-toggler[data-sidebar-toggle] {
     display: none;
+  }
+
+  /* Ajuste para el contenido principal cuando el sidebar tiene un ancho personalizado */
+  .main-content.custom-sidebar {
+    margin-left: 300px; /* Debe coincidir con el ancho del sidebar */
   }
 }
 

@@ -46,9 +46,9 @@
                     <div class="input-group">
                         <select class="form-select" id="icono" formControlName="icono"
                                 [class.is-invalid]="moduloForm.get('icono')?.invalid && (moduloForm.get('icono')?.dirty || moduloForm.get('icono')?.touched)">
-                            <option *ngFor="let icon of faIcons" [value]="icon.class">
+                            <option *ngFor="let icon of faIcons" [value]="'fas ' + icon.class">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas {{icon.class}} me-2"></i> {{icon.name}}
+                                    <i [class]="'fas ' + icon.class + ' me-2'"></i> {{icon.name}}
                                 </span>
                             </option>
                         </select>

@@ -1,17 +1,70 @@
-import { NgIf } from '@angular/common';
-import { Component} from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ProgramaService } from '../../../services/tables/programa.service';
+import { IProgramaView } from '../../../models/programa.model';
+import { ModuloService } from '../../../services/tables/modulo.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink],
+  imports: [RouterLink, NgFor, NgIf, FormsModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  programasAgrupados: { modulo: string, icono: string, categorias: { categoria: string, programas: IProgramaView[] }[] }[] = [];
+  searchText: string = '';
+  filteredPrograms: IProgramaView[] = [];
+
+  constructor(private router: Router, private programaService: ProgramaService, private moduloService: ModuloService) {}
+
+  ngOnInit(): void {
+    this.programaService.getAll().subscribe((programas: IProgramaView[]) => {
+      const modulosMap = new Map<number, string>();
+
+      // Obtener todos los módulos para mapear sus iconos
+      this.moduloService.getAll().subscribe(modulos => {
+        modulos.forEach(modulo => {
+          modulosMap.set(modulo.id_modulo!, modulo.icono);
+        });
+
+        const agrupados: Record<string, { icono: string, categorias: Record<string, IProgramaView[]> }> = programas.reduce((acc, programa) => {
+          const moduloDescripcion = programa.modulo_descripcion;
+          const icono = modulosMap.get(programa.id_modulo) || 'fas fa-cogs'; // Icono por defecto
+
+          if (!acc[moduloDescripcion]) {
+            acc[moduloDescripcion] = { icono, categorias: {} };
+          }
+
+          const categoriaDescripcion = programa.categoria_programa_descripcion;
+          if (!acc[moduloDescripcion].categorias[categoriaDescripcion]) {
+            acc[moduloDescripcion].categorias[categoriaDescripcion] = [];
+          }
+
+          acc[moduloDescripcion].categorias[categoriaDescripcion].push(programa);
+          return acc;
+        }, {} as Record<string, { icono: string, categorias: Record<string, IProgramaView[]> }>);
+
+        this.programasAgrupados = Object.entries(agrupados).map(([modulo, data]) => ({
+          modulo,
+          icono: data.icono,
+          categorias: Object.entries(data.categorias).map(([categoria, programas]) => ({
+            categoria,
+            programas
+          }))
+        }));
+
+        //console.log('Programas agrupados con iconos:', this.programasAgrupados);
+      });
+    });
+  }
+
+  generateId(value: string): string {
+    return value.replace(/\s+/g, '').toLowerCase();
+  }
 
   closeOnMobile() {
     if (window.innerWidth < 992) {
@@ -29,6 +82,18 @@ export class SidebarComponent {
 
   toggleCollapse() {
     this.closeOnMobile();
+  }
+
+  filterPrograms(): void {
+    if (this.searchText.trim() === '') {
+      this.filteredPrograms = [];
+      return;
+    }
+
+    this.filteredPrograms = this.programasAgrupados
+      .flatMap(modulo => modulo.categorias)
+      .flatMap(categoria => categoria.programas)
+      .filter(programa => programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
   logout(): void {

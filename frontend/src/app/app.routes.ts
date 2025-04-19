@@ -23,6 +23,10 @@ import { ProgramaFormComponent } from './components/pages/sistema_general/manten
 import { ProgramaListComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-list/programa-list.component';
 import { CategoriaProgramaListComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-list/categoria-programa-list.component';
 import { CategoriaProgramaFormComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-form/categoria-programa-form.component';
+import { ImpuestoFormComponent } from './components/pages/sistema_general/mantenimientos/impuestos/impuesto-form/impuesto-form.component';
+import { ImpuestoListComponent } from './components/pages/sistema_general/mantenimientos/impuestos/impuesto-list/impuesto-list.component';
+import { MarcaFormComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-form/marca-form.component';
+import { MarcaListComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-list/marca-list.component';
 
 export const routes: Routes = [
     {
@@ -86,6 +90,14 @@ export const routes: Routes = [
             { path: 'categorias-programas', component: CategoriaProgramaListComponent },
             { path: 'categorias-programas/nuevo', component: CategoriaProgramaFormComponent },
             { path: 'categorias-programas/editar/:id', component: CategoriaProgramaFormComponent },
+
+            { path: 'impuestos', component: ImpuestoListComponent },
+            { path: 'impuestos/nuevo', component: ImpuestoFormComponent },
+            { path: 'impuestos/editar/:id', component: ImpuestoFormComponent },
+
+            { path: 'marcas', component: MarcaListComponent },
+            { path: 'marcas/nuevo', component: MarcaFormComponent },
+            { path: 'marcas/editar/:id', component: MarcaFormComponent },
 
             // ... otras rutas
           ]

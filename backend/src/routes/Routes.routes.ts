@@ -11,6 +11,8 @@ import sucursalRoutes from '../routes/Sucursal.routes';
 import moduloRoutes from '../routes/Modulo.routes'; 
 import programaRoutes from '../routes/Programa.routes'; 
 import categoriaProgramaRoutes from '../routes/CategoriaPrograma.routes'; 
+import impuestoRoutes from '../routes/Impuesto.routes'; 
+import marcaRoutes from '../routes/Marca.routes';
 
 
 const router = Router();
@@ -27,5 +29,7 @@ router.use('/sucursales', authenticate, sucursalRoutes); // Todas las rutas de l
 router.use('/modulos', authenticate, moduloRoutes); // Todas las rutas de los modulos empezarán con /modulos
 router.use('/programas', authenticate, programaRoutes); // Todas las rutas de los programas empezarán con /programas
 router.use('/categorias_programas', authenticate, categoriaProgramaRoutes); // Todas las rutas de las categorias de programas empezarán con /categorias_programas
+router.use('/impuestos', authenticate, impuestoRoutes); // Todas las rutas de los impuestos empezarán con /impuestos
+router.use('/marcas', authenticate, marcaRoutes); // Todas las rutas de las marcas empezarán con /marcas
 // Exporta el router configurado
 export default router;

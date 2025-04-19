@@ -5,6 +5,21 @@
       <i class="fas fa-times"></i>
     </button>
   </div>
+
+  <!-- Campo de búsqueda con sugerencias mejoradas -->
+  <div class="p-3 position-relative">
+    <input type="text" class="form-control" placeholder="Buscar programas..." [(ngModel)]="searchText" (input)="filterPrograms()">
+    <div *ngIf="filteredPrograms.length > 0" class="position-absolute bg-white border rounded shadow-sm" style="z-index: 1050; max-height: 200px; overflow-auto; width: calc(100% - 30px); left: 15px;">
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let program of filteredPrograms" class="list-group-item list-group-item-action text-wrap">
+          <a [routerLink]="[program.ruta]" (click)="closeOnMobile()" class="text-decoration-none text-dark">
+            <i class="fas fa-arrow-right me-2 text-primary"></i>{{ program.nombre }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <div class="sidebar-menu">
     <ul class="nav flex-column">
             <!-- Otros menús principales -->
@@ -15,110 +30,37 @@
       </li>
 
       <!-- Menú principal Sistema General con submenú -->
-      <li class="nav-item">
+      <li class="nav-item" *ngFor="let modulo of programasAgrupados">
         <a class="nav-link d-flex justify-content-between align-items-center" 
-           data-bs-toggle="collapse" href="#sistemaGeneralSubmenu">
+           data-bs-toggle="collapse" [attr.href]="'#' + generateId(modulo.modulo) + 'Submenu'">
           <div>
-            <i class="fas fa-cogs me-2"></i> Sistema General
+            <i class="me-2" [class]="modulo.icono"></i> {{ modulo.modulo }}
           </div>
           <i class="fas fa-chevron-down"></i>
         </a>
-        <div class="collapse" id="sistemaGeneralSubmenu">
+        <div class="collapse" [id]="generateId(modulo.modulo) + 'Submenu'">
           <ul class="nav flex-column ps-4">
-            <li class="nav-item">
-              <a class="nav-link" 
-                 routerLinkActive="active"
-                 (click)="closeOnMobile()">
-                <i class="fas fa-list me-2"></i> Mantenimientos
+            <li class="nav-item" *ngFor="let categoria of modulo.categorias">
+              <a class="nav-link d-flex justify-content-between align-items-center" 
+                 data-bs-toggle="collapse" [attr.href]="'#' + generateId(categoria.categoria) + 'Submenu'">
+                <div>
+                  <i class="fas fa-list me-2"></i> {{ categoria.categoria }}
+                </div>
+                <i class="fas fa-chevron-down"></i>
               </a>
-              <!-- Submenú de Mantenimientos -->
-              <ul class="nav flex-column ps-3">
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/roles']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Roles
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/depositos']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Depositos
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/paises']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Paises
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/departamentos']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Departamentos
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/ciudades']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Ciudades
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/empresas']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Empresas
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/sucursales']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Sucursales
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/modulos']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Modulos
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/programas']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Programas
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" 
-                    [routerLink]="['/sistema_general/mantenimientos/categorias-programas']" routerLinkActive="router-link-active" 
-                     routerLinkActive="active"
-                     (click)="closeOnMobile()">
-                     <i class="fas fa-book"></i> Categoria de Programas
-                  </a>
-                </li>
-              </ul>
+              <div class="collapse" [id]="generateId(categoria.categoria) + 'Submenu'">
+                <ul class="nav flex-column ps-4">
+                  <li class="nav-item" *ngFor="let programa of categoria.programas">
+                    <a class="nav-link" [routerLink]="[programa.ruta]" routerLinkActive="router-link-active" (click)="closeOnMobile()">
+                      <i class="fas fa-book me-2"></i> {{ programa.nombre }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>
-      </li>     
-
+      </li>
     </ul>
     <!-- Agrega este ítem al final de tu menú -->
   <li class="nav-item"> <!-- mt-auto lo coloca al final -->
