@@ -14,12 +14,24 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Volcando estructura para tabla bms.categoria
+CREATE TABLE IF NOT EXISTS `categoria` (
+  `id_categoria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la categoría',
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL COMMENT 'Nombre de la categoría (Ej: Ferretería, Electricidad, Pinturas)',
+  PRIMARY KEY (`id_categoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Categorías principales de artículos';
+
+-- Volcando datos para la tabla bms.categoria: ~2 rows (aproximadamente)
+REPLACE INTO `categoria` (`id_categoria`, `descripcion`) VALUES
+	(1, 'Sin categoria'),
+	(2, 'Artículos para tereré y mate');
+
 -- Volcando estructura para tabla bms.categoria_programa
 CREATE TABLE IF NOT EXISTS `categoria_programa` (
   `id_categoria_programa` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la categoria de programas',
-  `descripcion` varchar(100) NOT NULL COMMENT 'Descripción de la categoria del programa',
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL COMMENT 'Descripción de la categoria del programa',
   PRIMARY KEY (`id_categoria_programa`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Tabla de categorías de programas';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla de categorías de programas';
 
 -- Volcando datos para la tabla bms.categoria_programa: ~6 rows (aproximadamente)
 REPLACE INTO `categoria_programa` (`id_categoria_programa`, `descripcion`) VALUES
@@ -207,6 +219,48 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 REPLACE INTO `empresa` (`id_empresa`, `razon_social`, `nombre_comercial`, `ruc`, `dv`, `direccion`, `telefono`, `email`, `id_ciudad`, `fecha_constitucion`, `representante_legal`, `estado`, `fecha_registro`, `fecha_actualizacion`) VALUES
 	(1, 'Business Management Systems', 'BMS', '5955455', '0', 'Barrio Virgen Serrana', '0975489075', 'armando.peralta.0405@gmail.com', 22, '2020-01-01', 'Armando Ariel Peralta Martinez', 1, '2025-04-15 19:56:34', '2025-04-15 19:56:58');
 
+-- Volcando estructura para tabla bms.impuesto
+CREATE TABLE IF NOT EXISTS `impuesto` (
+  `id_impuesto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único del impuesto',
+  `descripcion` varchar(100) NOT NULL COMMENT 'Descripción del impuesto (Ej: IVA 10%)',
+  `valor_calculo` int(11) NOT NULL COMMENT 'Divisor para cálculo (Ej: 11 para IVA 10%)',
+  `abreviacion` varchar(10) NOT NULL COMMENT 'Abreviación del impuesto (Ej: IVA10)',
+  PRIMARY KEY (`id_impuesto`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla de impuestos con divisores de cálculo';
+
+-- Volcando datos para la tabla bms.impuesto: ~3 rows (aproximadamente)
+REPLACE INTO `impuesto` (`id_impuesto`, `descripcion`, `valor_calculo`, `abreviacion`) VALUES
+	(1, 'Excentas', 0, 'Excenta'),
+	(2, 'Impuesto al valor agregado al 5%', 21, 'IVA 5%'),
+	(3, 'Impuesto al valor agregado al 10%', 11, 'IVA 10%');
+
+-- Volcando estructura para tabla bms.linea
+CREATE TABLE IF NOT EXISTS `linea` (
+  `id_linea` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la línea',
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL COMMENT 'Nombre específico de la línea',
+  `id_categoria` int(11) NOT NULL COMMENT 'Categoría a la que pertenece',
+  PRIMARY KEY (`id_linea`),
+  KEY `FK_linea_categoria` (`id_categoria`),
+  CONSTRAINT `FK_linea_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Líneas específicas de artículos por categoría';
+
+-- Volcando datos para la tabla bms.linea: ~0 rows (aproximadamente)
+REPLACE INTO `linea` (`id_linea`, `descripcion`, `id_categoria`) VALUES
+	(1, 'Sin Línea', 1),
+	(2, 'Termos y Jarras Térmicas', 2);
+
+-- Volcando estructura para tabla bms.marca
+CREATE TABLE IF NOT EXISTS `marca` (
+  `id_marca` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único de la marca',
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL COMMENT 'Nombre descriptivo de la marca',
+  PRIMARY KEY (`id_marca`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Catálogo de marcas de artículos';
+
+-- Volcando datos para la tabla bms.marca: ~2 rows (aproximadamente)
+REPLACE INTO `marca` (`id_marca`, `descripcion`) VALUES
+	(1, 'Sin Marca'),
+	(2, 'Stanley');
+
 -- Volcando estructura para tabla bms.modulo
 CREATE TABLE IF NOT EXISTS `modulo` (
   `id_modulo` int(11) NOT NULL AUTO_INCREMENT,
@@ -218,14 +272,15 @@ CREATE TABLE IF NOT EXISTS `modulo` (
   `fecha_actualizacion` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_modulo`),
   UNIQUE KEY `uq_modulo_descripcion` (`descripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Módulos principales del sistema';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Módulos principales del sistema';
 
--- Volcando datos para la tabla bms.modulo: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla bms.modulo: ~5 rows (aproximadamente)
 REPLACE INTO `modulo` (`id_modulo`, `descripcion`, `icono`, `orden`, `estado`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-	(1, 'Sistema General', 'fa-cogs', 0, 1, '2025-04-15 19:58:38', NULL),
-	(2, 'Finanzas', 'fa-cash-register', 0, 1, '2025-04-15 19:59:06', NULL),
-	(3, 'Compras', 'fa-shopping-cart', 0, 1, '2025-04-15 19:59:21', NULL),
-	(4, 'Control de Stock', 'fa-box', 0, 1, '2025-04-15 19:59:55', NULL);
+	(1, 'Sistema General', 'fas fa-user-cog', 0, 1, '2025-04-15 19:58:38', '2025-04-16 17:45:19'),
+	(2, 'Finanzas', 'fas fa-cash-register', 0, 1, '2025-04-15 19:59:06', '2025-04-16 17:45:33'),
+	(3, 'Compras', 'fas fa-shopping-cart', 0, 1, '2025-04-15 19:59:21', '2025-04-16 17:45:48'),
+	(4, 'Control de Stock', 'fas fa-box', 0, 1, '2025-04-15 19:59:55', '2025-04-16 17:46:10'),
+	(5, 'Otros', 'fas fa-tags', 0, 1, '2025-04-16 17:47:07', NULL);
 
 -- Volcando estructura para tabla bms.pais
 CREATE TABLE IF NOT EXISTS `pais` (
@@ -256,19 +311,24 @@ CREATE TABLE IF NOT EXISTS `programa` (
   KEY `FK_PROGRAMA_CATEGORIA_PROGRAMA` (`id_categoria`),
   CONSTRAINT `FK_PROGRAMA_CATEGORIA_PROGRAMA` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_programa` (`id_categoria_programa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `programa_ibfk_1` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Programas asociados a los módulos';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Programas asociados a los módulos';
 
--- Volcando datos para la tabla bms.programa: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla bms.programa: ~14 rows (aproximadamente)
 REPLACE INTO `programa` (`id_programa`, `id_modulo`, `nombre`, `ruta`, `estado`, `fecha_creacion`, `fecha_actualizacion`, `id_categoria`) VALUES
-	(1, 1, 'PRUEBA', '/PROBANDO', 1, '2025-04-15 20:00:40', '2025-04-16 14:26:24', 3),
-	(2, 1, 'Departamentos', '/departamentos', 1, '2025-04-15 20:00:54', '2025-04-16 14:21:41', 1),
-	(3, 1, 'Ciudades', '/ciudades', 1, '2025-04-15 20:01:12', '2025-04-16 14:21:42', 1),
-	(4, 1, 'Empresas', '/empresas', 1, '2025-04-15 20:02:03', '2025-04-16 14:21:42', 1),
-	(5, 1, 'Sucursales', '/sucursales', 1, '2025-04-15 20:02:15', '2025-04-16 14:21:43', 1),
-	(6, 1, 'Depósitos', '/depositos', 1, '2025-04-15 20:02:31', '2025-04-16 14:21:44', 1),
-	(7, 1, 'Roles', '/roles', 1, '2025-04-15 20:02:47', '2025-04-16 14:21:44', 1),
-	(8, 1, 'Módulos', '/modulos', 1, '2025-04-15 20:03:28', '2025-04-16 14:21:45', 1),
-	(9, 1, 'Programas', '/programas', 1, '2025-04-15 20:03:40', '2025-04-16 14:21:46', 1);
+	(1, 1, 'Cambio a Futuro', '/sin_ruta', 1, '2025-04-15 20:00:40', '2025-04-16 18:11:59', 1),
+	(2, 1, 'Departamentos', '/sistema_general/mantenimientos/departamentos', 1, '2025-04-15 20:00:54', '2025-04-16 18:12:05', 1),
+	(3, 1, 'Ciudades', '/sistema_general/mantenimientos/ciudades', 1, '2025-04-15 20:01:12', '2025-04-16 18:12:11', 1),
+	(4, 1, 'Empresas', '/sistema_general/mantenimientos/empresas', 1, '2025-04-15 20:02:03', '2025-04-16 18:12:20', 1),
+	(5, 1, 'Sucursales', '/sistema_general/mantenimientos/sucursales', 1, '2025-04-15 20:02:15', '2025-04-16 17:32:04', 1),
+	(6, 1, 'Depósitos', '/sistema_general/mantenimientos/depositos', 1, '2025-04-15 20:02:31', '2025-04-16 17:32:05', 1),
+	(7, 1, 'Roles', '/sistema_general/mantenimientos/roles', 1, '2025-04-15 20:02:47', '2025-04-16 17:32:07', 1),
+	(8, 1, 'Módulos', '/sistema_general/mantenimientos/modulos', 1, '2025-04-15 20:03:28', '2025-04-16 17:32:10', 1),
+	(9, 1, 'Programas', '/sistema_general/mantenimientos/programas', 1, '2025-04-15 20:03:40', '2025-04-16 17:32:13', 1),
+	(10, 1, 'Categorias de Programas', '/sistema_general/mantenimientos/categorias-programas', 1, '2025-04-16 17:55:44', NULL, 1),
+	(11, 1, 'Impuestos', '/sistema_general/mantenimientos/impuestos', 1, '2025-04-18 23:15:52', NULL, 1),
+	(12, 1, 'Marcas', '/sistema_general/mantenimientos/marcas', 1, '2025-04-19 00:00:09', NULL, 1),
+	(13, 1, 'Categorías', '/sistema_general/mantenimientos/categorias', 1, '2025-04-19 00:57:13', NULL, 1),
+	(14, 1, 'Líneas', '/sistema_general/mantenimientos/lineas', 1, '2025-04-19 01:22:51', NULL, 1);
 
 -- Volcando estructura para tabla bms.rol
 CREATE TABLE IF NOT EXISTS `rol` (
@@ -381,6 +441,15 @@ CREATE TABLE `empresa_view` (
 	`fecha_actualizacion` TIMESTAMP NULL COMMENT 'Fecha de última actualización'
 ) ENGINE=MyISAM;
 
+-- Volcando estructura para vista bms.linea_view
+-- Creando tabla temporal para superar errores de dependencia de VIEW
+CREATE TABLE `linea_view` (
+	`id_linea` INT(11) NOT NULL COMMENT 'ID único de la línea',
+	`descripcion` VARCHAR(1) NOT NULL COMMENT 'Nombre específico de la línea' COLLATE 'utf8mb4_uca1400_ai_ci',
+	`id_categoria` INT(11) NOT NULL COMMENT 'Categoría a la que pertenece',
+	`categoria_descripcion` VARCHAR(1) NOT NULL COMMENT 'Nombre de la categoría (Ej: Ferretería, Electricidad, Pinturas)' COLLATE 'utf8mb4_uca1400_ai_ci'
+) ENGINE=MyISAM;
+
 -- Volcando estructura para vista bms.modulo_view
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `modulo_view` (
@@ -488,6 +557,16 @@ fecha_registro,
 fecha_actualizacion
 FROM empresa E
 INNER JOIN ciudad AS C ON C.id_ciudad = E.id_ciudad ;
+
+-- Eliminando tabla temporal y crear estructura final de VIEW
+DROP TABLE IF EXISTS `linea_view`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `linea_view` AS SELECT
+L.id_linea,
+L.descripcion,
+L.id_categoria,
+C.descripcion AS categoria_descripcion
+FROM linea AS L
+INNER JOIN categoria AS C ON C.id_categoria = L.id_categoria ;
 
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `modulo_view`;

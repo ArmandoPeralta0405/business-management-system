@@ -13,6 +13,8 @@ import programaRoutes from '../routes/Programa.routes';
 import categoriaProgramaRoutes from '../routes/CategoriaPrograma.routes'; 
 import impuestoRoutes from '../routes/Impuesto.routes'; 
 import marcaRoutes from '../routes/Marca.routes';
+import categoriaRoutes from '../routes/Categoria.routes';
+import LineaRoutes from '../routes/Linea.routes';
 
 
 const router = Router();
@@ -31,5 +33,7 @@ router.use('/programas', authenticate, programaRoutes); // Todas las rutas de lo
 router.use('/categorias_programas', authenticate, categoriaProgramaRoutes); // Todas las rutas de las categorias de programas empezarán con /categorias_programas
 router.use('/impuestos', authenticate, impuestoRoutes); // Todas las rutas de los impuestos empezarán con /impuestos
 router.use('/marcas', authenticate, marcaRoutes); // Todas las rutas de las marcas empezarán con /marcas
+router.use('/categorias', authenticate, categoriaRoutes); // Todas las rutas de las categorias empezarán con /categorias
+router.use('/lineas', authenticate, LineaRoutes); // Todas las rutas de las lineas empezarán con /lineas
 // Exporta el router configurado
 export default router;

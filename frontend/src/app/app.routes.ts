@@ -27,6 +27,10 @@ import { ImpuestoFormComponent } from './components/pages/sistema_general/manten
 import { ImpuestoListComponent } from './components/pages/sistema_general/mantenimientos/impuestos/impuesto-list/impuesto-list.component';
 import { MarcaFormComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-form/marca-form.component';
 import { MarcaListComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-list/marca-list.component';
+import { CategoriaFormComponent } from './components/pages/sistema_general/mantenimientos/categorias/categoria-form/categoria-form.component';
+import { CategoriaListComponent } from './components/pages/sistema_general/mantenimientos/categorias/categoria-list/categoria-list.component';
+import { LineaFormComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-form/linea-form.component';
+import { LineaListComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-list/linea-list.component';
 
 export const routes: Routes = [
     {
@@ -98,6 +102,14 @@ export const routes: Routes = [
             { path: 'marcas', component: MarcaListComponent },
             { path: 'marcas/nuevo', component: MarcaFormComponent },
             { path: 'marcas/editar/:id', component: MarcaFormComponent },
+
+            { path: 'categorias', component: CategoriaListComponent },
+            { path: 'categorias/nuevo', component: CategoriaFormComponent },
+            { path: 'categorias/editar/:id', component: CategoriaFormComponent },
+
+            { path: 'lineas', component: LineaListComponent },
+            { path: 'lineas/nuevo', component: LineaFormComponent },
+            { path: 'lineas/editar/:id', component: LineaFormComponent },
 
             // ... otras rutas
           ]
