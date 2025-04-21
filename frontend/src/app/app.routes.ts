@@ -31,6 +31,12 @@ import { CategoriaFormComponent } from './components/pages/sistema_general/mante
 import { CategoriaListComponent } from './components/pages/sistema_general/mantenimientos/categorias/categoria-list/categoria-list.component';
 import { LineaFormComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-form/linea-form.component';
 import { LineaListComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-list/linea-list.component';
+import { TipoArticuloFormComponent } from './components/pages/sistema_general/mantenimientos/tipos_articulos/tipo-articulo-form/tipo-articulo-form.component';
+import { TipoArticuloListComponent } from './components/pages/sistema_general/mantenimientos/tipos_articulos/tipo-articulo-list/tipo-articulo-list.component';
+import { UnidadMedidaListComponent } from './components/pages/sistema_general/mantenimientos/unidades_medidas/unidad-medida-list/unidad-medida-list.component';
+import { UnidadMedidaFormComponent } from './components/pages/sistema_general/mantenimientos/unidades_medidas/unidad-medida-form/unidad-medida-form.component';
+import { ArticuloFormComponent } from './components/pages/sistema_general/mantenimientos/articulos/articulo-form/articulo-form.component';
+import { ArticuloListComponent } from './components/pages/sistema_general/mantenimientos/articulos/articulo-list/articulo-list.component';
 
 export const routes: Routes = [
     {
@@ -111,7 +117,23 @@ export const routes: Routes = [
             { path: 'lineas/nuevo', component: LineaFormComponent },
             { path: 'lineas/editar/:id', component: LineaFormComponent },
 
+            { path: 'tipos_articulos', component: TipoArticuloListComponent },
+            { path: 'tipos_articulos/nuevo', component: TipoArticuloFormComponent },
+            { path: 'tipos_articulos/editar/:id', component: TipoArticuloFormComponent },
+
+            { path: 'unidades_medidas', component: UnidadMedidaListComponent },
+            { path: 'unidades_medidas/nuevo', component: UnidadMedidaFormComponent },
+            { path: 'unidades_medidas/editar/:id', component: UnidadMedidaFormComponent },
+
             // ... otras rutas
+          ]
+        },
+        { 
+          path: 'control_stock/mantenimientos',
+          children: [
+            { path: 'articulos', component: ArticuloListComponent },
+            { path: 'articulos/nuevo', component: ArticuloFormComponent },
+            { path: 'articulos/editar/:id', component: ArticuloFormComponent },
           ]
         }
       ]

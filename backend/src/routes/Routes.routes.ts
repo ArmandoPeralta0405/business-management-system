@@ -15,7 +15,9 @@ import impuestoRoutes from '../routes/Impuesto.routes';
 import marcaRoutes from '../routes/Marca.routes';
 import categoriaRoutes from '../routes/Categoria.routes';
 import LineaRoutes from '../routes/Linea.routes';
-
+import TipoArticuloRoutes from '../routes/TipoArticulo.routes';
+import UnidadMedidaRoutes from '../routes/UnidadMedida.routes';
+import ArticuloRoutes from '../routes/Articulo.routes';
 
 const router = Router();
 
@@ -35,5 +37,8 @@ router.use('/impuestos', authenticate, impuestoRoutes); // Todas las rutas de lo
 router.use('/marcas', authenticate, marcaRoutes); // Todas las rutas de las marcas empezarán con /marcas
 router.use('/categorias', authenticate, categoriaRoutes); // Todas las rutas de las categorias empezarán con /categorias
 router.use('/lineas', authenticate, LineaRoutes); // Todas las rutas de las lineas empezarán con /lineas
+router.use('/tipos_articulos', authenticate, TipoArticuloRoutes); // Todas las rutas de los tipos de articulos empezarán con /tipos_articulos
+router.use('/unidades_medidas', authenticate, UnidadMedidaRoutes); // Todas las rutas de las unidades de medidas empezarán con /unidades_medidas
+router.use('/articulos', authenticate, ArticuloRoutes); // Todas las rutas de los articulos empezarán con /articulos
 // Exporta el router configurado
 export default router;

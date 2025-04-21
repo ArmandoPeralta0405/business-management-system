@@ -1,0 +1,111 @@
+<h2>Lista de Artículos</h2>
+<div class="card mb-3">
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando artículos...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger m-3">
+        {{ errorMessage }}
+    </div>
+
+    <div class="card-header bg-transparent">
+        <div class="btn-group">
+            <a class="btn btn-outline-success" [routerLink]="['/control_stock/mantenimientos/articulos/nuevo']"
+                routerLinkActive="active">
+                <i class="fa-solid fa-plus"></i> Nuevo registro
+            </a>
+            <button type="button" class="btn btn-outline-secondary" (click)="recargarDatos()">
+                <i class="fa-solid fa-rotate"></i> Refrescar datos
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Ingrese aquí los datos..." [(ngModel)]="searchText">
+            <label class="btn btn-outline-secondary" type="text">
+                <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            </label>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="items-per-page">
+                <label class="me-2">Mostrar:</label>
+                <select class="form-select form-select-sm" [(ngModel)]="itemsPerPage" style="width: auto;">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <span class="ms-2">registros</span>
+            </div>
+
+            <div class="total-items">
+                Mostrando {{ (p - 1) * itemsPerPage + 1 }} a
+                {{ Math.min(p * itemsPerPage, filteredArticulos.length) }} de
+                {{ filteredArticulos.length }} registros
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-striped rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" style="width: 5%">#</th>
+                        <th scope="col" style="width: 10%">ID</th>
+                        <th scope="col" style="width: 40%">Descripción</th>
+                        <th scope="col" style="width: 25%">C.Alfanumérico</th>
+                        <th scope="col" style="width: 20%">Estado</th>
+                        <th scope="col" style="width: 15%" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let articulo of filteredArticulos | paginate: { 
+                        itemsPerPage: itemsPerPage, 
+                        currentPage: p,
+                        totalItems: filteredArticulos.length 
+                    }; let i = index">
+                        <th scope="row">{{ (p - 1) * itemsPerPage + i + 1 }}</th>
+                        <td>{{ articulo.id_articulo }}</td>
+                        <td>{{ articulo.descripcion }}</td>
+                        <td>{{ articulo.codigo_alfanumerico }}</td>
+                        <td>{{ articulo.estado }}</td>
+                        <td class="text-nowrap text-center">
+                            <ng-container *ngIf="!isBeingDeleted(articulo.id_articulo!)">
+                                <a [routerLink]="['/control_stock/mantenimientos/articulos/editar', articulo.id_articulo]"
+                                    class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="isBeingDeleted(articulo.id_articulo!)">
+                                <span class="btn btn-sm btn-outline-primary me-1 disabled" title="Operación en curso">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                            </ng-container>
+
+                            <button (click)="eliminarArticulo(articulo.id_articulo!)" class="btn btn-sm btn-outline-danger"
+                                title="Eliminar" [disabled]="isBeingDeleted(articulo.id_articulo!)">
+                                <i class="fas fa-trash-alt" *ngIf="!isBeingDeleted(articulo.id_articulo!)"></i>
+                                <span class="spinner-border spinner-border-sm"
+                                    *ngIf="isBeingDeleted(articulo.id_articulo!)"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="filteredArticulos.length === 0 && !isLoading">
+                        <td colspan="6" class="text-center text-muted py-3">
+                            {{ articulos.length === 0 ? 'No hay artículos registrados' : 'No se encontraron resultados' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center mt-3">
+                <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+                    screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+                    screenReaderCurrentLabel="Página actual" [responsive]="true" [maxSize]="5" class="my-pagination">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

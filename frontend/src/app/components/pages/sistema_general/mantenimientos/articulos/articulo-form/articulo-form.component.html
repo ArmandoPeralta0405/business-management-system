@@ -1,0 +1,140 @@
+<h2>Formulario de Artículos</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/control_stock/mantenimientos/articulos']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="articuloForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="codigo_alfanumerico" class="form-label">Código Alfanumérico</label>
+                    <input type="text" class="form-control" id="codigo_alfanumerico" formControlName="codigo_alfanumerico"
+                        [class.is-invalid]="articuloForm.get('codigo_alfanumerico')?.invalid && (articuloForm.get('codigo_alfanumerico')?.dirty || articuloForm.get('codigo_alfanumerico')?.touched)"
+                        placeholder="Ingrese el código alfanumérico" maxlength="50" autocomplete="off">
+                    <div *ngIf="articuloForm.get('codigo_alfanumerico')?.invalid && (articuloForm.get('codigo_alfanumerico')?.dirty || articuloForm.get('codigo_alfanumerico')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="articuloForm.get('codigo_alfanumerico')?.errors?.['required']">
+                            El código alfanumérico es requerido
+                        </div>
+                        <div *ngIf="articuloForm.get('codigo_alfanumerico')?.errors?.['maxlength']">
+                            No puede exceder los 50 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                        [class.is-invalid]="articuloForm.get('descripcion')?.invalid && (articuloForm.get('descripcion')?.dirty || articuloForm.get('descripcion')?.touched)"
+                        placeholder="Ingrese la descripción" maxlength="200" autocomplete="off">
+                    <div *ngIf="articuloForm.get('descripcion')?.invalid && (articuloForm.get('descripcion')?.dirty || articuloForm.get('descripcion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="articuloForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="articuloForm.get('descripcion')?.errors?.['maxlength']">
+                            No puede exceder los 200 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos adicionales -->
+                <div class="col-md-6 mb-3">
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <select class="form-select" id="id_categoria" formControlName="id_categoria">
+                        <option value="">Seleccione una categoría</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+                            {{ categoria.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_linea" class="form-label">Línea</label>
+                    <select class="form-select" id="id_linea" formControlName="id_linea">
+                        <option value="">Seleccione una línea</option>
+                        <option *ngFor="let linea of lineas" [value]="linea.id_linea">
+                            {{ linea.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_marca" class="form-label">Marca</label>
+                    <select class="form-select" id="id_marca" formControlName="id_marca">
+                        <option value="">Seleccione una marca</option>
+                        <option *ngFor="let marca of marcas" [value]="marca.id_marca">
+                            {{ marca.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_tipo" class="form-label">Tipo</label>
+                    <select class="form-select" id="id_tipo" formControlName="id_tipo">
+                        <option value="">Seleccione un tipo</option>
+                        <option *ngFor="let tipo of tipos" [value]="tipo.id_tipo">
+                            {{ tipo.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_unidad" class="form-label">Unidad</label>
+                    <select class="form-select" id="id_unidad" formControlName="id_unidad">
+                        <option value="">Seleccione una unidad</option>
+                        <option *ngFor="let unidad of unidades" [value]="unidad.id_unidad">
+                            {{ unidad.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_impuesto" class="form-label">Impuesto</label>
+                    <select class="form-select" id="id_impuesto" formControlName="id_impuesto">
+                        <option value="">Seleccione un impuesto</option>
+                        <option *ngFor="let impuesto of impuestos" [value]="impuesto.id_impuesto">
+                            {{ impuesto.descripcion }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+                        <label class="form-check-label" for="estado">Activo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/control_stock/mantenimientos/articulos']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="articuloForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
