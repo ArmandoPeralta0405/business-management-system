@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/auth.middleware'; // Importa el middleware
+import { generateBackup } from '../controllers/backup.controller';
 import rolRoutes from '../routes/Rol.routes';
 import usuarioRoutes from '../routes/Usuario.routes';
 import depositoRoutes from '../routes/Deposito.routes';
@@ -18,8 +19,12 @@ import LineaRoutes from '../routes/Linea.routes';
 import TipoArticuloRoutes from '../routes/TipoArticulo.routes';
 import UnidadMedidaRoutes from '../routes/UnidadMedida.routes';
 import ArticuloRoutes from '../routes/Articulo.routes';
+import TipoBarraRoutes from '../routes/TipoBarra.routes';
+
 
 const router = Router();
+
+router.post('/backup', generateBackup);
 
 // Aplica el middleware de autenticación en las rutas de roles y usuarios
 router.use('/roles', authenticate, rolRoutes); // Todas las rutas de roles empezarán con /roles
@@ -40,5 +45,6 @@ router.use('/lineas', authenticate, LineaRoutes); // Todas las rutas de las line
 router.use('/tipos_articulos', authenticate, TipoArticuloRoutes); // Todas las rutas de los tipos de articulos empezarán con /tipos_articulos
 router.use('/unidades_medidas', authenticate, UnidadMedidaRoutes); // Todas las rutas de las unidades de medidas empezarán con /unidades_medidas
 router.use('/articulos', authenticate, ArticuloRoutes); // Todas las rutas de los articulos empezarán con /articulos
+router.use('/tipos_barras', authenticate, TipoBarraRoutes); // Todas las rutas de los tipos de barras empezarán con /tipos_barras
 // Exporta el router configurado
 export default router;

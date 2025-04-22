@@ -1,0 +1,4 @@
+2025-04-22 09:34:00 [[31merror[39m]: Error en backup: Command failed: mysqldump --host=localhost --port=3306 --user=root --password=root bms > D:\Proyectos\business-management-system\backend\backups\backup-2025-04-22T13-33-59-972Z.sql
+"mysqldump" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
