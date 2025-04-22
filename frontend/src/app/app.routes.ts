@@ -23,20 +23,22 @@ import { ProgramaFormComponent } from './components/pages/sistema_general/manten
 import { ProgramaListComponent } from './components/pages/sistema_general/mantenimientos/programas/programa-list/programa-list.component';
 import { CategoriaProgramaListComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-list/categoria-programa-list.component';
 import { CategoriaProgramaFormComponent } from './components/pages/sistema_general/mantenimientos/categorias_programas/categoria-programa-form/categoria-programa-form.component';
-import { ImpuestoFormComponent } from './components/pages/sistema_general/mantenimientos/impuestos/impuesto-form/impuesto-form.component';
-import { ImpuestoListComponent } from './components/pages/sistema_general/mantenimientos/impuestos/impuesto-list/impuesto-list.component';
-import { MarcaFormComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-form/marca-form.component';
-import { MarcaListComponent } from './components/pages/sistema_general/mantenimientos/marcas/marca-list/marca-list.component';
-import { CategoriaFormComponent } from './components/pages/sistema_general/mantenimientos/categorias/categoria-form/categoria-form.component';
-import { CategoriaListComponent } from './components/pages/sistema_general/mantenimientos/categorias/categoria-list/categoria-list.component';
-import { LineaFormComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-form/linea-form.component';
-import { LineaListComponent } from './components/pages/sistema_general/mantenimientos/lineas/linea-list/linea-list.component';
-import { TipoArticuloFormComponent } from './components/pages/sistema_general/mantenimientos/tipos_articulos/tipo-articulo-form/tipo-articulo-form.component';
-import { TipoArticuloListComponent } from './components/pages/sistema_general/mantenimientos/tipos_articulos/tipo-articulo-list/tipo-articulo-list.component';
-import { UnidadMedidaListComponent } from './components/pages/sistema_general/mantenimientos/unidades_medidas/unidad-medida-list/unidad-medida-list.component';
-import { UnidadMedidaFormComponent } from './components/pages/sistema_general/mantenimientos/unidades_medidas/unidad-medida-form/unidad-medida-form.component';
-import { ArticuloFormComponent } from './components/pages/sistema_general/mantenimientos/articulos/articulo-form/articulo-form.component';
-import { ArticuloListComponent } from './components/pages/sistema_general/mantenimientos/articulos/articulo-list/articulo-list.component';
+import { ImpuestoFormComponent } from './components/pages/control_stock/mantenimientos/impuestos/impuesto-form/impuesto-form.component';
+import { ImpuestoListComponent } from './components/pages/control_stock/mantenimientos/impuestos/impuesto-list/impuesto-list.component';
+import { MarcaFormComponent } from './components/pages/control_stock/mantenimientos/marcas/marca-form/marca-form.component';
+import { MarcaListComponent } from './components/pages/control_stock/mantenimientos/marcas/marca-list/marca-list.component';
+import { CategoriaFormComponent } from './components/pages/control_stock/mantenimientos/categorias/categoria-form/categoria-form.component';
+import { CategoriaListComponent } from './components/pages/control_stock/mantenimientos/categorias/categoria-list/categoria-list.component';
+import { LineaFormComponent } from './components/pages/control_stock/mantenimientos/lineas/linea-form/linea-form.component';
+import { LineaListComponent } from './components/pages/control_stock/mantenimientos/lineas/linea-list/linea-list.component';
+import { TipoArticuloFormComponent } from './components/pages/control_stock/mantenimientos/tipos_articulos/tipo-articulo-form/tipo-articulo-form.component';
+import { TipoArticuloListComponent } from './components/pages/control_stock/mantenimientos/tipos_articulos/tipo-articulo-list/tipo-articulo-list.component';
+import { UnidadMedidaListComponent } from './components/pages/control_stock/mantenimientos/unidades_medidas/unidad-medida-list/unidad-medida-list.component';
+import { UnidadMedidaFormComponent } from './components/pages/control_stock/mantenimientos/unidades_medidas/unidad-medida-form/unidad-medida-form.component';
+import { ArticuloFormComponent } from './components/pages/control_stock/mantenimientos/articulos/articulo-form/articulo-form.component';
+import { ArticuloListComponent } from './components/pages/control_stock/mantenimientos/articulos/articulo-list/articulo-list.component';
+import { TipoBarraFormComponent } from './components/pages/control_stock/mantenimientos/tipos_barras/tipo-barra-form/tipo-barra-form.component';
+import { TipoBarraListComponent } from './components/pages/control_stock/mantenimientos/tipos_barras/tipo-barra-list/tipo-barra-list.component';
 
 export const routes: Routes = [
     {
@@ -101,21 +103,36 @@ export const routes: Routes = [
             { path: 'categorias-programas/nuevo', component: CategoriaProgramaFormComponent },
             { path: 'categorias-programas/editar/:id', component: CategoriaProgramaFormComponent },
 
-            { path: 'impuestos', component: ImpuestoListComponent },
-            { path: 'impuestos/nuevo', component: ImpuestoFormComponent },
-            { path: 'impuestos/editar/:id', component: ImpuestoFormComponent },
-
-            { path: 'marcas', component: MarcaListComponent },
-            { path: 'marcas/nuevo', component: MarcaFormComponent },
-            { path: 'marcas/editar/:id', component: MarcaFormComponent },
-
+            
+            // ... otras rutas
+          ]
+        },
+        { 
+          path: 'control_stock/mantenimientos',
+          children: [
             { path: 'categorias', component: CategoriaListComponent },
             { path: 'categorias/nuevo', component: CategoriaFormComponent },
             { path: 'categorias/editar/:id', component: CategoriaFormComponent },
 
+            { path: 'impuestos', component: ImpuestoListComponent },
+            { path: 'impuestos/nuevo', component: ImpuestoFormComponent },
+            { path: 'impuestos/editar/:id', component: ImpuestoFormComponent },
+
+            { path: 'articulos', component: ArticuloListComponent },
+            { path: 'articulos/nuevo', component: ArticuloFormComponent },
+            { path: 'articulos/editar/:id', component: ArticuloFormComponent },
+
+            { path: 'tipos_barras', component: TipoBarraListComponent },
+            { path: 'tipos_barras/nuevo', component: TipoBarraFormComponent },
+            { path: 'tipos_barras/editar/:id', component: TipoBarraFormComponent },
+
             { path: 'lineas', component: LineaListComponent },
             { path: 'lineas/nuevo', component: LineaFormComponent },
             { path: 'lineas/editar/:id', component: LineaFormComponent },
+
+            { path: 'marcas', component: MarcaListComponent },
+            { path: 'marcas/nuevo', component: MarcaFormComponent },
+            { path: 'marcas/editar/:id', component: MarcaFormComponent },
 
             { path: 'tipos_articulos', component: TipoArticuloListComponent },
             { path: 'tipos_articulos/nuevo', component: TipoArticuloFormComponent },
@@ -125,15 +142,6 @@ export const routes: Routes = [
             { path: 'unidades_medidas/nuevo', component: UnidadMedidaFormComponent },
             { path: 'unidades_medidas/editar/:id', component: UnidadMedidaFormComponent },
 
-            // ... otras rutas
-          ]
-        },
-        { 
-          path: 'control_stock/mantenimientos',
-          children: [
-            { path: 'articulos', component: ArticuloListComponent },
-            { path: 'articulos/nuevo', component: ArticuloFormComponent },
-            { path: 'articulos/editar/:id', component: ArticuloFormComponent },
           ]
         }
       ]

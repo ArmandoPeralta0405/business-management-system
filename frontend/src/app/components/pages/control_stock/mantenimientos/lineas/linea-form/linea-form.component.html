@@ -1,0 +1,77 @@
+<h2>Formulario de Líneas</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/control_stock/mantenimientos/lineas']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="lineaForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <select class="form-select" id="id_categoria" formControlName="id_categoria"
+                        [class.is-invalid]="lineaForm.get('id_categoria')?.invalid && (lineaForm.get('id_categoria')?.dirty || lineaForm.get('id_categoria')?.touched)">
+                        <option value="">Seleccione una categoría</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+                            {{ categoria.descripcion }}
+                        </option>
+                    </select>
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="lineaForm.get('id_categoria')?.invalid && (lineaForm.get('id_categoria')?.dirty || lineaForm.get('id_categoria')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="lineaForm.get('id_categoria')?.errors?.['required']">
+                            La categoría es requerida
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                        [class.is-invalid]="lineaForm.get('descripcion')?.invalid && (lineaForm.get('descripcion')?.dirty || lineaForm.get('descripcion')?.touched)"
+                        placeholder="Ingrese la descripción de la línea" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="lineaForm.get('descripcion')?.invalid && (lineaForm.get('descripcion')?.dirty || lineaForm.get('descripcion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="lineaForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="lineaForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/control_stock/mantenimientos/lineas']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="lineaForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

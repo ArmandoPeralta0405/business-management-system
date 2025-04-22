@@ -1,0 +1,115 @@
+<h2>Lista de Impuestos</h2>
+<div class="card mb-3">
+    <!-- Indicador de carga -->
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando impuestos...</p>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger m-3">
+        {{ errorMessage }}
+    </div>
+
+    <div class="card-header bg-transparent">
+        <div class="btn-group">
+            <a class="btn btn-outline-success" [routerLink]="['/control_stock/mantenimientos/impuestos/nuevo']"
+                routerLinkActive="active">
+                <i class="fa-solid fa-plus"></i> Nuevo registro
+            </a>
+            <button type="button" class="btn btn-outline-secondary" (click)="recargarDatos()">
+                <i class="fa-solid fa-rotate"></i> Refrescar datos
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Buscador -->
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Ingrese aquí los datos..." [(ngModel)]="searchText">
+            <label class="btn btn-outline-secondary" type="text">
+                <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            </label>
+        </div>
+        <!-- Selector de items por página -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="items-per-page">
+                <label class="me-2">Mostrar:</label>
+                <select class="form-select form-select-sm" [(ngModel)]="itemsPerPage" style="width: auto;">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <span class="ms-2">registros</span>
+            </div>
+
+            <div class="total-items">
+                Mostrando {{ (p - 1) * itemsPerPage + 1 }} a
+                {{ Math.min(p * itemsPerPage, filteredImpuestos.length) }} de
+                {{ filteredImpuestos.length }} registros
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-striped rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" style="width: 5%">#</th> <!-- Columna más estrecha -->
+                        <th scope="col" style="width: 10%">Código</th>
+                        <th scope="col" style="width: 50%">Descripción</th>
+                        <th scope="col" style="width: 20%">Abreviación</th>
+                        <th scope="col" style="width: 15%" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let impuesto of filteredImpuestos | paginate: { 
+                        itemsPerPage: itemsPerPage, 
+                        currentPage: p,
+                        totalItems: filteredImpuestos.length 
+                    }; let i = index">
+                        <th scope="row">{{ (p - 1) * itemsPerPage + i + 1 }}</th>
+                        <td>{{ impuesto.id_impuesto }}</td>
+                        <td>{{ impuesto.descripcion }}</td>
+                        <td>{{ impuesto.abreviacion }}</td>
+                        <td class="text-nowrap text-center">
+                            <!-- Botón Editar -->
+                            <ng-container *ngIf="!isBeingDeleted(impuesto.id_impuesto!)">
+                                <a [routerLink]="['/control_stock/mantenimientos/impuestos/editar', impuesto.id_impuesto]"
+                                    class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="isBeingDeleted(impuesto.id_impuesto!)">
+                                <span class="btn btn-sm btn-outline-primary me-1 disabled" title="Operación en curso">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                            </ng-container>
+
+                            <!-- Botón Eliminar -->
+                            <button (click)="eliminarImpuesto(impuesto.id_impuesto!)" class="btn btn-sm btn-outline-danger"
+                                title="Eliminar" [disabled]="isBeingDeleted(impuesto.id_impuesto!)">
+                                <i class="fas fa-trash-alt" *ngIf="!isBeingDeleted(impuesto.id_impuesto!)"></i>
+                                <span class="spinner-border spinner-border-sm"
+                                    *ngIf="isBeingDeleted(impuesto.id_impuesto!)"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="filteredImpuestos.length === 0 && !isLoading">
+                        <td colspan="5" class="text-center text-muted py-3">
+                            {{ impuestos.length === 0 ? 'No hay impuestos registrados' : 'No se encontraron resultados' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Paginación -->
+            <div class="d-flex justify-content-center mt-3">
+                <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+                    screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+                    screenReaderCurrentLabel="Página actual" [responsive]="true" [maxSize]="5" class="my-pagination">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
