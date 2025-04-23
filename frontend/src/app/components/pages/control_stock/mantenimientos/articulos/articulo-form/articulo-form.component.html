@@ -116,6 +116,13 @@
                     </select>
                 </div>
 
+                <!-- Botón de acceso a Códigos de Barras, visible solo en modo edición -->
+                <div class="col-md-6 mb-3" *ngIf="isEditMode">
+                    <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#codigoBarrasModal">
+                        <i class="fa-solid fa-barcode"></i> Códigos de Barras
+                    </button>
+                </div>
+
                 <div class="col-md-6 mb-3">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
@@ -138,3 +145,122 @@
         </form>
     </div>
 </div>
+
+<!-- Modal para Códigos de Barras -->
+<div class="modal fade" id="codigoBarrasModal" tabindex="-1" aria-labelledby="codigoBarrasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="codigoBarrasModalLabel">Gestión de Códigos de Barras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Agregar buscador para la tabla de códigos de barras -->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Buscar código de barras..." [(ngModel)]="searchText">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                    </button>
+                </div>
+                <!-- Formulario para registrar o editar códigos de barras -->
+                <div class="mb-3">
+                    <!-- Ajustar el formulario para evitar recargar la página al agregar un nuevo código de barras -->
+                    <form (ngSubmit)="onSubmitCodigoBarra()">
+                        <div class="row g-1">
+                            <div class="col-md-4">
+                                <label for="codigoBarraInput" class="form-label mb-1">Código de Barras</label>
+                                <input type="text" class="form-control form-control-sm" id="codigoBarraInput" #codigoBarraInput [(ngModel)]="codigoBarraData.codigo_barra" name="codigo_barra" placeholder="Código de barras">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tipoBarraSelect" class="form-label mb-1">Tipo</label>
+                                <select class="form-select form-select-sm" id="tipoBarraSelect" #tipoBarraSelect [(ngModel)]="codigoBarraData.id_tipo" name="id_tipo">
+                                    <option *ngFor="let tipo of tiposBarra" [value]="tipo.id_tipo">{{ tipo.descripcion }}</option>
+                                </select>
+                            </div>
+                            <!-- Cambiar el select del estado a un switch como en el formulario de artículos -->
+                            <div class="col-md-4">
+                                <label for="estadoSwitch" class="form-label mb-1">Estado</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="estadoSwitch" [(ngModel)]="codigoBarraData.estado" name="estado">
+                                    <label class="form-check-label" for="estadoSwitch">{{ codigoBarraData.estado ? 'Activo' : 'Inactivo' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-sm btn-primary">{{ selectedCodigoBarra ? 'Actualizar' : 'Agregar' }}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabla con paginación para códigos de barras -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-sm table-hover table-striped rounded">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="width: 5%">#</th>
+                                <th scope="col" style="width: 30%">Código</th>
+                                <th scope="col" style="width: 30%">Tipo</th>
+                                <th scope="col" style="width: 20%">Estado</th>
+                                <th scope="col" style="width: 15%" class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let codigo of filteredCodigosBarras | paginate: { itemsPerPage: itemsPerPage, currentPage: p }; let i = index">
+                                <th scope="row">{{ (p - 1) * itemsPerPage + i + 1 }}</th>
+                                <td>{{ codigo.codigo_barra }}</td>
+                                <td>{{ codigo.tipo_barra_descripcion }}</td>
+                                <td>{{ codigo.estado }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary me-1" (click)="onEditCodigoBarra(codigo)"><i class="fas fa-pencil-alt"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" (click)="removeCodigoBarra(codigo.id_codigo!)"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="filteredCodigosBarras.length === 0">
+                                <td colspan="5" class="text-center text-muted py-3">No hay códigos de barras registrados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="items-per-page">
+                            <label class="me-2">Mostrar:</label>
+                            <select class="form-select form-select-sm" [(ngModel)]="itemsPerPage" style="width: auto;">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                            <span class="ms-2">registros</span>
+                        </div>
+                        <div class="total-items">
+                            Mostrando {{ (p - 1) * itemsPerPage + 1 }} a
+                            {{ Math.min(p * itemsPerPage, filteredCodigosBarras.length) }} de
+                            {{ filteredCodigosBarras.length }} registros
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Página actual" [responsive]="true" [maxSize]="5" class="my-pagination">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Limpiar el formulario y la tabla al cerrar el modal
+    const codigoBarrasModal = document.getElementById('codigoBarrasModal');
+    codigoBarrasModal.addEventListener('hidden.bs.modal', () => {
+        // Limpiar el formulario
+        document.getElementById('codigoBarraInput').value = '';
+        document.getElementById('tipoBarraSelect').value = '';
+        document.getElementById('estadoSwitch').checked = true;
+
+        // Limpiar la tabla
+        const tableBody = codigoBarrasModal.querySelector('tbody');
+        tableBody.innerHTML = '';
+    });
+</script>

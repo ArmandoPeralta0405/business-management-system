@@ -130,4 +130,8 @@ export class SidebarComponent implements OnInit {
       }
     });
   }
+
+  reloadSidebar():void {
+    this.filterPrograms();
+  }
 }

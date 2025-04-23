@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ArticuloService } from '../../../../../../services/tables/articulo.service';
 import { CategoriaService } from '../../../../../../services/tables/categoria.service';
 import { LineaService } from '../../../../../../services/tables/linea.service';
@@ -11,15 +11,23 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IArticulo } from '../../../../../../models/articulo.model';
 import Swal from 'sweetalert2';
+import { CodigoBarraService } from '../../../../../../services/tables/codigo_barra.service';
+import { ICodigoBarraView, ICodigoBarra } from '../../../../../../models/codigo_barra.model';
+import { TipoBarraService } from '../../../../../../services/tables/tipo_barra.service';
+import { ITipoBarra } from '../../../../../../models/tipo_barra.model';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-articulo-form',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './articulo-form.component.html',
   styleUrl: './articulo-form.component.css'
 })
 export class ArticuloFormComponent implements OnInit {
+
+  // Propiedad para controlar la visibilidad del modal
+  showCodigosBarrasModal = false;
 
   articuloForm: FormGroup;
   isEditMode = false;
@@ -27,12 +35,28 @@ export class ArticuloFormComponent implements OnInit {
   isLoading = false;
   formTitle: string = 'Nuevo Artículo';
 
+  Math = Math;
+
   categorias: any[] = [];
   lineas: any[] = [];
   marcas: any[] = [];
   tipos: any[] = [];
   unidades: any[] = [];
   impuestos: any[] = [];
+  codigosBarras: ICodigoBarraView[] = [];
+  selectedCodigoBarra: ICodigoBarra | null = null;
+  tiposBarra: ITipoBarra[] = [];
+
+  codigoBarraData = {
+    codigo_barra: '',
+    id_tipo: 0,
+    estado: true
+  };
+
+  p: number = 1;
+  itemsPerPage: number = 5;
+
+  searchText: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +67,8 @@ export class ArticuloFormComponent implements OnInit {
     private tipoArticuloService: TipoArticuloService,
     private unidadMedidaService: UnidadMedidaService,
     private impuestoService: ImpuestoService,
+    private codigoBarraService: CodigoBarraService,
+    private tipoBarraService: TipoBarraService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -72,6 +98,9 @@ export class ArticuloFormComponent implements OnInit {
         this.loadArticuloData(this.articuloId);
       }
     });
+
+    this.loadCodigosBarras();
+    this.loadTiposBarra();
   }
 
   loadReferenciales(): void {
@@ -121,6 +150,123 @@ export class ArticuloFormComponent implements OnInit {
       }
     });
   }
+
+  loadCodigosBarras(): void {
+    if (!this.articuloId) return;
+
+    this.codigoBarraService.getAll().subscribe({
+        next: (data) => {
+            this.codigosBarras = data.filter(codigo => codigo.id_articulo === this.articuloId);
+        },
+        error: (error) => {
+            console.error('Error al cargar códigos de barras:', error);
+        }
+    });
+  }
+
+  loadTiposBarra(): void {
+    this.tipoBarraService.getAll().subscribe({
+        next: (data) => {
+            this.tiposBarra = data;
+        },
+        error: (error) => {
+            console.error('Error al cargar tipos de barra:', error);
+        }
+    });
+  }
+
+  addCodigoBarra(codigoBarraData: Omit<ICodigoBarra, 'id_codigo'>): void {
+    this.codigoBarraService.create(codigoBarraData).subscribe({
+        next: (newCodigoBarra) => {
+            this.loadCodigosBarras();
+        },
+        error: (error) => {
+            console.error('Error al agregar código de barras:', error);
+        }
+    });
+  }
+
+  updateCodigoBarra(id_codigo: number, codigoBarraData: Partial<ICodigoBarra>): void {
+    if (!this.articuloId) return;
+
+    this.codigoBarraService.update(id_codigo, this.articuloId, codigoBarraData).subscribe({
+        next: () => {
+            this.loadCodigosBarras();
+        },
+        error: (error) => {
+            console.error('Error al actualizar código de barras:', error);
+        }
+    });
+  }
+
+  removeCodigoBarra(id_codigo: number): void {
+    if (!this.articuloId) return;
+
+    this.codigoBarraService.delete(id_codigo, this.articuloId).subscribe({
+        next: () => {
+            this.loadCodigosBarras();
+        },
+        error: (error) => {
+            console.error('Error al eliminar código de barras:', error);
+        }
+    });
+  }
+
+  loadCodigoBarraData(id_codigo: number, id_articulo: number): void {
+    this.codigoBarraService.getById(id_codigo, id_articulo).subscribe({
+        next: (codigoBarra) => {
+            this.codigoBarraData = {
+                codigo_barra: codigoBarra.codigo_barra,
+                id_tipo: codigoBarra.id_tipo,
+                estado: codigoBarra.estado
+            };
+            this.selectedCodigoBarra = codigoBarra;
+        },
+        error: (error) => {
+            console.error('Error al cargar el código de barras:', error);
+        }
+    });
+}
+
+  onSubmitCodigoBarra(): void {
+    if (this.selectedCodigoBarra) {
+        this.updateCodigoBarra(this.selectedCodigoBarra.id_codigo!, {
+            codigo_barra: this.codigoBarraData.codigo_barra,
+            id_tipo: this.codigoBarraData.id_tipo ?? undefined,
+            estado: this.codigoBarraData.estado ?? true
+        });
+    } else {
+        this.addCodigoBarra({
+            id_articulo: this.articuloId!,
+            codigo_barra: this.codigoBarraData.codigo_barra,
+            id_tipo: this.codigoBarraData.id_tipo ?? 0,
+            estado: this.codigoBarraData.estado ?? true
+        });
+    }
+
+    this.codigoBarraData = {
+        codigo_barra: '',
+        id_tipo: 0,
+        estado: true
+    };
+    this.selectedCodigoBarra = null;
+}
+
+onEditCodigoBarra(codigo: ICodigoBarraView): void {
+    this.codigoBarraService.getById(codigo.id_codigo!, codigo.id_articulo).subscribe({
+        next: (data) => {
+            this.selectedCodigoBarra = data;
+            this.codigoBarraData = {
+                codigo_barra: data.codigo_barra,
+                id_tipo: data.id_tipo,
+                estado: data.estado
+            };
+        },
+        error: (error) => {
+            console.error('Error al cargar el código de barras:', error);
+        }
+    });
+}
 
   onSubmit(): void {
     if (this.articuloForm.invalid) {
@@ -183,6 +329,22 @@ export class ArticuloFormComponent implements OnInit {
       icon: 'error',
       confirmButtonColor: '#7D161A',
       footer: 'Verifique la consola para más detalles'
+    });
+  }
+
+  get filteredCodigosBarras(): ICodigoBarraView[] {
+    if (!this.searchText) {
+        return this.codigosBarras;
+    }
+
+    const searchTextLower = this.searchText.toLowerCase();
+
+    return this.codigosBarras.filter(codigo => {
+        return (
+            codigo.codigo_barra.toLowerCase().includes(searchTextLower) ||
+            codigo.tipo_barra_descripcion.toLowerCase().includes(searchTextLower) ||
+            codigo.estado.toLowerCase().includes(searchTextLower)
+        );
     });
   }
 }

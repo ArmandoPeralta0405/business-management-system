@@ -9,7 +9,7 @@
   <!-- Campo de búsqueda con sugerencias mejoradas -->
   <div class="p-3 position-relative">
     <input type="text" class="form-control" placeholder="Buscar programas..." [(ngModel)]="searchText" (input)="filterPrograms()">
-    <div *ngIf="filteredPrograms.length > 0" class="position-absolute bg-white border rounded shadow-sm" style="z-index: 1050; max-height: 200px; overflow-auto; width: calc(100% - 30px); left: 15px;">
+    <div *ngIf="filteredPrograms.length > 0" class="position-absolute bg-white border rounded shadow-sm" style="z-index: 1050; max-height: 200px; width: calc(100% - 30px); left: 15px;">
       <ul class="list-group list-group-flush">
         <li *ngFor="let program of filteredPrograms" class="list-group-item list-group-item-action text-wrap">
           <a [routerLink]="[program.ruta]" (click)="closeOnMobile()" class="text-decoration-none text-dark">
@@ -60,9 +60,10 @@
             </li>
           </ul>
         </div>
-      </li>
+      </li>        
     </ul>
     <!-- Agrega este ítem al final de tu menú -->
+  <hr>
   <li class="nav-item"> <!-- mt-auto lo coloca al final -->
     <a class="nav-link" (click)="logout()" style="cursor: pointer;">
       <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
