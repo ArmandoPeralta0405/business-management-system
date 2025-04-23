@@ -17,3 +17,28 @@
     background-color: rgba(255, 255, 255, 0.1);
     border-left: 3px solid #0d6efd;
   }
+
+/* Estilo para el tooltip de búsqueda */
+.position-absolute.bg-white {
+  background-color: #f8f9fa; /* Color más claro */
+  border: 1px solid #dee2e6; /* Borde más definido */
+  border-radius: 0.25rem; /* Bordes redondeados */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra más suave */
+}
+
+/* Estilo para el elemento activo en la lista */
+.list-group-item.active {
+  background-color: white;
+  color: blue;
+  font-weight: bold;
+}
+
+/* Estilo para los elementos de la lista */
+.list-group-item {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.list-group-item:hover {
+  background-color: #e9ecef; /* Color de fondo al pasar el mouse */
+  color: #212529;
+}

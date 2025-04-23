@@ -8,10 +8,12 @@
 
   <!-- Campo de búsqueda con sugerencias mejoradas -->
   <div class="p-3 position-relative">
-    <input type="text" class="form-control" placeholder="Buscar programas..." [(ngModel)]="searchText" (input)="filterPrograms()">
+    <input type="text" class="form-control" placeholder="Buscar programas..." [(ngModel)]="searchText" (input)="filterPrograms()" (keydown)="handleKeyDown($event)">
     <div *ngIf="filteredPrograms.length > 0" class="position-absolute bg-white border rounded shadow-sm" style="z-index: 1050; max-height: 200px; width: calc(100% - 30px); left: 15px;">
       <ul class="list-group list-group-flush">
-        <li *ngFor="let program of filteredPrograms" class="list-group-item list-group-item-action text-wrap">
+        <li *ngFor="let program of filteredPrograms; let i = index" 
+            [class.active]="i === activeIndex" 
+            class="list-group-item list-group-item-action text-wrap">
           <a [routerLink]="[program.ruta]" (click)="closeOnMobile()" class="text-decoration-none text-dark">
             <i class="fas fa-arrow-right me-2 text-primary"></i>{{ program.nombre }}
           </a>
