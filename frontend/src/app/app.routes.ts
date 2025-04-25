@@ -39,6 +39,8 @@ import { ArticuloFormComponent } from './components/pages/control_stock/mantenim
 import { ArticuloListComponent } from './components/pages/control_stock/mantenimientos/articulos/articulo-list/articulo-list.component';
 import { TipoBarraFormComponent } from './components/pages/control_stock/mantenimientos/tipos_barras/tipo-barra-form/tipo-barra-form.component';
 import { TipoBarraListComponent } from './components/pages/control_stock/mantenimientos/tipos_barras/tipo-barra-list/tipo-barra-list.component';
+import { MovimientoFormComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-form/movimiento-form.component';
+import { MovimientoListComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-list/movimiento-list.component';
 
 export const routes: Routes = [
     {
@@ -103,7 +105,10 @@ export const routes: Routes = [
             { path: 'categorias-programas/nuevo', component: CategoriaProgramaFormComponent },
             { path: 'categorias-programas/editar/:id', component: CategoriaProgramaFormComponent },
 
-            
+            { path: 'movimientos', component: MovimientoListComponent },
+            { path: 'movimientos/nuevo', component: MovimientoFormComponent },
+            { path: 'movimientos/editar/:id', component: MovimientoFormComponent },
+
             // ... otras rutas
           ]
         },

@@ -21,6 +21,7 @@ import UnidadMedidaRoutes from '../routes/UnidadMedida.routes';
 import ArticuloRoutes from '../routes/Articulo.routes';
 import TipoBarraRoutes from '../routes/TipoBarra.routes';
 import CodigoBarraRoutes from '../routes/CodigoBarra.routes';
+import MovimientoRoutes from '../routes/Movimiento.routes';
 
 
 const router = Router();
@@ -48,6 +49,6 @@ router.use('/unidades_medidas', authenticate, UnidadMedidaRoutes); // Todas las 
 router.use('/articulos', authenticate, ArticuloRoutes); // Todas las rutas de los articulos empezarán con /articulos
 router.use('/tipos_barras', authenticate, TipoBarraRoutes); // Todas las rutas de los tipos de barras empezarán con /tipos_barras
 router.use('/codigos_barras', authenticate, CodigoBarraRoutes); // Todas las rutas de los codigos de barras empezarán con /codigos_barras
-
+router.use('/movimientos', authenticate, MovimientoRoutes); // Todas las rutas de los movimientos empezarán con /movimientos
 // Exporta el router configurado
 export default router;
