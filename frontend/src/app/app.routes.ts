@@ -41,6 +41,7 @@ import { TipoBarraFormComponent } from './components/pages/control_stock/manteni
 import { TipoBarraListComponent } from './components/pages/control_stock/mantenimientos/tipos_barras/tipo-barra-list/tipo-barra-list.component';
 import { MovimientoFormComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-form/movimiento-form.component';
 import { MovimientoListComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-list/movimiento-list.component';
+import { AjusteStockFormComponent } from './components/pages/control_stock/movimientos/ajustes_stocks/ajuste-stock-form/ajuste-stock-form.component';
 
 export const routes: Routes = [
     {
@@ -147,6 +148,12 @@ export const routes: Routes = [
             { path: 'unidades_medidas/nuevo', component: UnidadMedidaFormComponent },
             { path: 'unidades_medidas/editar/:id', component: UnidadMedidaFormComponent },
 
+          ]
+        },
+        { 
+          path: 'control_stock/movimientos',
+          children: [
+            { path: 'ajustes_stocks', component: AjusteStockFormComponent }
           ]
         }
       ]

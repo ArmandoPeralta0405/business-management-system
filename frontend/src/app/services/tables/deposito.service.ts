@@ -22,6 +22,10 @@ export class DepositoService {
     return this.http.get<IDeposito>(`${this.apiUrl}/${id}`);
   }
 
+  getBySucursal(id_empresa: number, id_sucursal: number): Observable<IDeposito[]> { // Cambiado a Observable<IDeposito[]>
+    return this.http.get<IDeposito[]>(`${this.apiUrl}/sucursal/${id_empresa}/${id_sucursal}`);
+  }
+
   create(depositoData: Omit<IDeposito, 'id_deposito'>): Observable<IDeposito> {  
     return this.http.post<IDeposito>(this.apiUrl, depositoData);
   }

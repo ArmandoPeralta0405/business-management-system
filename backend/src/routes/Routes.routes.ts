@@ -22,6 +22,8 @@ import ArticuloRoutes from '../routes/Articulo.routes';
 import TipoBarraRoutes from '../routes/TipoBarra.routes';
 import CodigoBarraRoutes from '../routes/CodigoBarra.routes';
 import MovimientoRoutes from '../routes/Movimiento.routes';
+import AjusteStockRoutes from '../routes/AjusteStock.routes';
+import DetlleAjusteStockRoutes from '../routes/DetalleAjusteStock.routes';
 
 
 const router = Router();
@@ -50,5 +52,7 @@ router.use('/articulos', authenticate, ArticuloRoutes); // Todas las rutas de lo
 router.use('/tipos_barras', authenticate, TipoBarraRoutes); // Todas las rutas de los tipos de barras empezarán con /tipos_barras
 router.use('/codigos_barras', authenticate, CodigoBarraRoutes); // Todas las rutas de los codigos de barras empezarán con /codigos_barras
 router.use('/movimientos', authenticate, MovimientoRoutes); // Todas las rutas de los movimientos empezarán con /movimientos
+router.use('/ajustes_stocks', authenticate, AjusteStockRoutes); // Todas las rutas de los ajustes de stock empezarán con /ajustes_stocks
+router.use('/detalles_ajustes_stocks', authenticate, DetlleAjusteStockRoutes); // Todas las rutas de los detalles de ajustes de stock empezarán con /detalles_ajustes_stocks
 // Exporta el router configurado
 export default router;

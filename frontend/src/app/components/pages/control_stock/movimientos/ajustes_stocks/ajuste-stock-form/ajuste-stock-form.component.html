@@ -1,0 +1,120 @@
+<!-- Contenedor principal con clase de formulario estándar -->
+<div class="form-container">
+  <div class="form-header">
+    <h2>Formulario de Movimientos de Ajuste de Stock</h2>
+  </div>
+  <br>
+  <div class="form-actions d-flex align-items-center" style="gap: 8px;">
+    <button type="button" class="btn btn-outline-primary" (click)="onNuevaTransaccion()">
+      <i class="fa fa-plus"></i> Nueva Operación
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancelarOperacion()">
+      <i class="fa fa-times"></i> Cancelar operación
+    </button>
+  </div>
+  <div class="form-box mt-3">
+    <div class="d-flex align-items-end flex-wrap" style="gap: 12px;">
+      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+        <label for="fechaAjuste" class="form-label" style="font-size: 0.95rem;">Fecha de Ajuste</label>
+        <input
+          type="date"
+          id="fechaAjuste"
+          class="form-control form-control-sm"
+          name="fechaAjuste"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.fechaAjuste"
+          (change)="onFechaChange()"
+          [disabled]="formDisabled"
+        />
+      </div>
+      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+        <label for="horaAjuste" class="form-label" style="font-size: 0.95rem;">Hora</label>
+        <input
+          type="time"
+          id="horaAjuste"
+          class="form-control form-control-sm"
+          name="horaAjuste"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.horaAjuste"
+          readonly
+          [disabled]="formDisabled"
+        />
+      </div>
+    </div>
+    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+        <label for="numeroDocumento" class="form-label" style="font-size: 0.95rem;">Número de Documento</label>
+        <input
+          type="text"
+          id="numeroDocumento"
+          class="form-control form-control-sm"
+          name="numeroDocumento"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.numeroDocumento"
+          [disabled]="formDisabled"
+        />
+      </div>
+      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+        <label for="usuario" class="form-label" style="font-size: 0.95rem;">Usuario</label>
+        <input
+          type="text"
+          id="usuario"
+          class="form-control form-control-sm"
+          name="usuario"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.usuario"
+          readonly
+          [disabled]="formDisabled"
+        />
+      </div>
+    </div>
+    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+        <label for="empresa" class="form-label" style="font-size: 0.95rem;">Empresa</label>
+        <select
+          id="empresa"
+          class="form-control form-control-sm"
+          name="empresa"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.empresa"
+          (change)="onEmpresaChange()"
+          [disabled]="formDisabled"
+        >
+          <option value="-1">Seleccione empresa</option>
+          <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.razon_social }}</option>
+        </select>
+      </div>
+      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+        <label for="sucursal" class="form-label" style="font-size: 0.95rem;">Sucursal</label>
+        <select
+          id="sucursal"
+          class="form-control form-control-sm"
+          name="sucursal"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.sucursal"
+          (change)="onSucursalChange()" 
+          [disabled]="formDisabled || formData.empresa === -1"
+        >
+          <option value="-1">Seleccione sucursal</option>
+          <option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">{{ sucursal.descripcion }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+        <label for="deposito" class="form-label" style="font-size: 0.95rem;">Depósito</label>
+        <select
+          id="deposito"
+          class="form-control form-control-sm"
+          name="deposito"
+          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
+          [(ngModel)]="formData.deposito"
+          [disabled]="formDisabled || formData.empresa === -1 || formData.sucursal === -1"
+        >
+          <option value="-1">Seleccione depósito</option>
+          <option *ngFor="let deposito of depositos" [value]="deposito.id_deposito">{{ deposito.descripcion }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
