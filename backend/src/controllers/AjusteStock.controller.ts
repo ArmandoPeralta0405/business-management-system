@@ -5,6 +5,16 @@ import { IAjusteStock, IAjusteStockView } from '../models/AjusteStock.model';
 const ajusteStockService = new AjusteStockService();
 
 export class AjusteStockController {
+
+  async fetchNextNumeroComprobante(req: Request, res: Response) {
+    try {
+      const numeroComprobante = await ajusteStockService.fetchNextNumeroComprobante();
+      res.json({ numeroComprobante });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener el número de comprobante' });
+    }
+  }
+
   async getAll(req: Request, res: Response) {
     try {
       const ajustes_stocks = await ajusteStockService.getAll();
@@ -38,7 +48,7 @@ export class AjusteStockController {
       const id = await ajusteStockService.create(newAjusteStock);
       res.status(201).json({ id });
     } catch (error) {
-      res.status(400).json({ error: 'Error al crear ajuste de stock' });
+      res.status(400).json({ error: 'Error al crear ajuste de stock' + error });
     }
   }
 

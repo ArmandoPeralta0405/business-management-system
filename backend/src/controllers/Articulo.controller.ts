@@ -14,6 +14,15 @@ export class ArticuloController {
     }
   }
 
+  async getArticulosActivos(req: Request, res: Response) {
+    try {
+      const articulos = await articuloService.getArticulosActivos();
+      res.json(articulos);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener articulos activos' });
+    }
+  }
+
   async getById(req: Request, res: Response) {
     try {
       const articulo = await articuloService.getById(parseInt(req.params.id));

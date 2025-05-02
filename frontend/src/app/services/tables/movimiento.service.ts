@@ -37,4 +37,8 @@ export class MovimientoService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getMovimientosStock(): Observable<IMovimiento[]> { // Asumiendo que devuelve un array de IMovimiento
+    return this.http.get<IMovimiento[]>(`${this.apiUrl}/movimientos_stock`);
+  }
 }

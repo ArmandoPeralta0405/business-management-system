@@ -7,7 +7,7 @@ export class MovimientoService extends MovimientoModel {
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM movimiento_view');
     return rows as IMovimientoView[];
   }
-
+  
   async getById(id: number): Promise<IMovimiento | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
       'SELECT * FROM movimiento WHERE id_movimiento = ?', 
@@ -38,5 +38,10 @@ export class MovimientoService extends MovimientoModel {
       [id]
     );
     return result.affectedRows > 0;
+  }
+
+  async getMovimientosStock(): Promise<IMovimientoView[]> {
+    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM movimiento_view WHERE tipo_movimiento = 'Otros' AND estado = 'Activo'`);
+    return rows as IMovimientoView[];
   }
 }

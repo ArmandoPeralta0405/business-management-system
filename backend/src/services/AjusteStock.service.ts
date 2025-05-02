@@ -3,6 +3,12 @@ import pool from '../config/database';
 import { RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 
 export class AjusteStockService extends AjusteStockModel {
+
+  async fetchNextNumeroComprobante(): Promise<number> {
+    const [rows] = await pool.query<RowDataPacket[]>('CALL pa_ajuste_stock_next_nro_comprobante()');
+    return rows[0][0].numero_comprobante;
+  }
+  
   async getAll(): Promise<IAjusteStockView[]> {
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM ajuste_stock_view');
     return rows as IAjusteStockView[];
@@ -30,6 +36,7 @@ export class AjusteStockService extends AjusteStockModel {
         ajusteStockData.id_usuario
       ]
     );
+    
     return result.insertId;
   }
 
@@ -58,4 +65,5 @@ export class AjusteStockService extends AjusteStockModel {
     );
     return result.affectedRows > 0;
   }
+
 }

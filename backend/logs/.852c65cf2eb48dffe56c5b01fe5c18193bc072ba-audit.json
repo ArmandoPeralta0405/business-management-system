@@ -6,11 +6,6 @@
     "auditLog": "D:\\Proyectos\\business-management-system\\backend\\logs\\.852c65cf2eb48dffe56c5b01fe5c18193bc072ba-audit.json",
     "files": [
         {
-            "date": 1744810474484,
-            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-16.log",
-            "hash": "baf4db2dd62fa368d7330b2e0104714729b021eedd7bcbd7a1372df4f483d613"
-        },
-        {
             "date": 1745017357629,
             "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-18.log",
             "hash": "0ee06965592097817165497654415440b42b2320a03215aac52255f28e4f74c3"
@@ -44,6 +39,26 @@
             "date": 1745863805875,
             "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-28.log",
             "hash": "72d654f70914958dfc8414e5dce55b729f44a9f774f2e5d84076312bb2a9c55c"
+        },
+        {
+            "date": 1745925462651,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-29.log",
+            "hash": "8554fbe5c270cf6bfd8a79305a2f5e129cc0443bb585e13d947869a5f09c919b"
+        },
+        {
+            "date": 1746016448317,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-04-30.log",
+            "hash": "51bb3b3e32a3cabc71ad98d136f0978008a7dc5e35ad141b4bf97e7fe158baac"
+        },
+        {
+            "date": 1746117156723,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-05-01.log",
+            "hash": "9623118356865d42a1fafd1c1f07c6d03f6d382d4a04d2f8b2bad75cf3af1c88"
+        },
+        {
+            "date": 1746187798134,
+            "name": "D:\\Proyectos\\business-management-system\\backend\\logs\\application-2025-05-02.log",
+            "hash": "903ac2f79a9539db94f192eb949f0fb2538226fc2905c123f395bd587350a021"
         }
     ],
     "hashType": "sha256"

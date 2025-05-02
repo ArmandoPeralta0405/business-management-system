@@ -32,4 +32,5 @@ export interface IMovimientoView {
     abstract create(movimientoData: Omit<IMovimiento, 'id_movimiento'>): Promise<number>;
     abstract update(id: number, movimientoData: Partial<IMovimiento>): Promise<boolean>;
     abstract delete(id: number): Promise<boolean>;
+    abstract getMovimientosStock(): Promise<IMovimientoView[]>;
   }

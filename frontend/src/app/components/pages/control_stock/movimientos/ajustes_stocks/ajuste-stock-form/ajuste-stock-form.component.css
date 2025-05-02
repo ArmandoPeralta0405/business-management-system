@@ -6,3 +6,38 @@
     margin-top: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
+
+.table-container {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+.table-container thead {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+.table-container table {
+  margin-bottom: 0;
+}
+
+/* Estilos para las sugerencias de artículos */
+.sugerencia-articulo {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sugerencia-articulo:hover {
+  background-color: #e9ecef;
+}
+
+.sugerencia-articulo.active {
+  background-color: #007bff;
+  color: white;
+}

@@ -4,6 +4,8 @@ import { ArticuloController } from '../controllers/Articulo.controller';
 const router = Router();
 const controller = new ArticuloController();
 
+router.get('/activos', controller.getArticulosActivos);
+
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.post('/', controller.create);

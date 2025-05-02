@@ -12,108 +12,250 @@
       <i class="fa fa-times"></i> Cancelar operación
     </button>
   </div>
-  <div class="form-box mt-3">
-    <div class="d-flex align-items-end flex-wrap" style="gap: 12px;">
-      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
-        <label for="fechaAjuste" class="form-label" style="font-size: 0.95rem;">Fecha de Ajuste</label>
-        <input
-          type="date"
-          id="fechaAjuste"
-          class="form-control form-control-sm"
-          name="fechaAjuste"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.fechaAjuste"
-          (change)="onFechaChange()"
-          [disabled]="formDisabled"
-        />
-      </div>
-      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
-        <label for="horaAjuste" class="form-label" style="font-size: 0.95rem;">Hora</label>
-        <input
-          type="time"
-          id="horaAjuste"
-          class="form-control form-control-sm"
-          name="horaAjuste"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.horaAjuste"
-          readonly
-          [disabled]="formDisabled"
-        />
+
+  <!-- Sistema de pestañas -->
+  <ul class="nav nav-tabs mt-3" id="ajusteStockTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="cabecera-tab" data-bs-toggle="tab" data-bs-target="#cabecera" type="button"
+        role="tab" aria-controls="cabecera" aria-selected="true">
+        Datos Generales
+        <span *ngIf="datosGeneralesCompletos" class="ms-2 text-success">
+          <i class="fa fa-check-circle"></i>
+        </span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="articulos-tab" data-bs-toggle="tab" data-bs-target="#articulos" type="button"
+        role="tab" aria-controls="articulos" aria-selected="false" [disabled]="!datosGeneralesCompletos"
+        (click)="verificarDatosGenerales()">
+        Artículos
+        <span *ngIf="hayArticulosAgregados" class="ms-2 text-success">
+          <i class="fa fa-check-circle"></i>
+        </span>
+      </button>
+    </li>
+  </ul>
+
+  <!-- Contenido de las pestañas -->
+  <div class="tab-content" id="ajusteStockTabContent">
+    <!-- Pestaña 1: Datos Generales -->
+    <div class="tab-pane fade show active" id="cabecera" role="tabpanel" aria-labelledby="cabecera-tab">
+      <div class="form-box mt-3">
+        <!-- Alerta para datos incompletos -->
+        <div *ngIf="mostrarAlertaDatosIncompletos" class="alert alert-warning alert-dismissible fade show" role="alert">
+          Por favor, complete todos los datos generales antes de continuar.
+          <button type="button" class="btn-close" (click)="mostrarAlertaDatosIncompletos = false"
+            aria-label="Close"></button>
+        </div>
+
+        <div class="d-flex align-items-end flex-wrap" style="gap: 12px;">
+          <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+            <label for="fechaAjuste" class="form-label" style="font-size: 0.95rem;">Fecha de Ajuste</label>
+            <input type="date" id="fechaAjuste" class="form-control form-control-sm" name="fechaAjuste"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.fechaAjuste"
+              (change)="onFechaChange(); verificarDatosGenerales()" [disabled]="formDisabled" />
+          </div>
+          <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+            <label for="horaAjuste" class="form-label" style="font-size: 0.95rem;">Hora</label>
+            <input type="time" id="horaAjuste" class="form-control form-control-sm" name="horaAjuste"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.horaAjuste" readonly
+              [disabled]="formDisabled" />
+          </div>
+        </div>
+        <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+          <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+            <label for="numeroDocumento" class="form-label" style="font-size: 0.95rem;">Número de Documento</label>
+            <input type="text" id="numeroDocumento" class="form-control form-control-sm" name="numeroDocumento"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.numeroDocumento"
+              readonly />
+          </div>
+          <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
+            <label for="usuario" class="form-label" style="font-size: 0.95rem;">Usuario</label>
+            <input type="text" id="usuario" class="form-control form-control-sm" name="usuario"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.usuario" readonly
+              [disabled]="formDisabled" />
+          </div>
+        </div>
+        <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+          <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+            <label for="empresa" class="form-label" style="font-size: 0.95rem;">Empresa</label>
+            <select id="empresa" class="form-control form-control-sm" name="empresa"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.empresa"
+              (change)="onEmpresaChange(); verificarDatosGenerales()" [disabled]="formDisabled">
+              <option value="-1">Seleccione empresa</option>
+              <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.razon_social }}</option>
+            </select>
+          </div>
+          <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+            <label for="sucursal" class="form-label" style="font-size: 0.95rem;">Sucursal</label>
+            <select id="sucursal" class="form-control form-control-sm" name="sucursal"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.sucursal"
+              (change)="onSucursalChange(); verificarDatosGenerales()"
+              [disabled]="formDisabled || formData.empresa === -1">
+              <option value="-1">Seleccione sucursal</option>
+              <option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">{{ sucursal.descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+          <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+            <label for="deposito" class="form-label" style="font-size: 0.95rem;">Depósito</label>
+            <select id="deposito" class="form-control form-control-sm" name="deposito"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.deposito"
+              (change)="verificarDatosGenerales()"
+              [disabled]="formDisabled || formData.empresa === -1 || formData.sucursal === -1">
+              <option value="-1">Seleccione depósito</option>
+              <option *ngFor="let deposito of depositos" [value]="deposito.id_deposito">{{ deposito.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
+            <label for="tipoMovimiento" class="form-label" style="font-size: 0.95rem;">Tipo de Movimiento</label>
+            <select id="tipoMovimiento" class="form-control form-control-sm" name="tipoMovimiento"
+              style="height: 32px; font-size: 1rem; padding: 2px 8px;" [(ngModel)]="formData.tipoMovimiento"
+              (change)="verificarDatosGenerales()"
+              [disabled]="formDisabled">
+              <option value="-1">Seleccione un tipo de movimiento</option>
+              <option *ngFor="let tipo of tiposMovimientos" [value]="tipo.id_movimiento">
+                {{ tipo.descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
+          <div class="form-group mb-0" style="flex: 1; min-width: 300px;">
+            <label for="observaciones" class="form-label" style="font-size: 0.95rem;">Observaciones</label>
+            <textarea id="observaciones" class="form-control form-control-sm" name="observaciones"
+              style="font-size: 1rem; padding: 8px;" [(ngModel)]="formData.observaciones" [disabled]="formDisabled"
+              rows="3" placeholder="Ingrese observaciones sobre el ajuste de stock"></textarea>
+          </div>
+        </div>
+
+        <!-- Botón para continuar a la pestaña de artículos -->
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-primary" [disabled]="!datosGeneralesCompletos" (click)="irAArticulos()">
+            Continuar a Artículos <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
-      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
-        <label for="numeroDocumento" class="form-label" style="font-size: 0.95rem;">Número de Documento</label>
-        <input
-          type="text"
-          id="numeroDocumento"
-          class="form-control form-control-sm"
-          name="numeroDocumento"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.numeroDocumento"
-          [disabled]="formDisabled"
-        />
-      </div>
-      <div class="form-group mb-0" style="flex: 1 1 120px; min-width: 100px;">
-        <label for="usuario" class="form-label" style="font-size: 0.95rem;">Usuario</label>
-        <input
-          type="text"
-          id="usuario"
-          class="form-control form-control-sm"
-          name="usuario"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.usuario"
-          readonly
-          [disabled]="formDisabled"
-        />
-      </div>
-    </div>
-    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
-      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
-        <label for="empresa" class="form-label" style="font-size: 0.95rem;">Empresa</label>
-        <select
-          id="empresa"
-          class="form-control form-control-sm"
-          name="empresa"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.empresa"
-          (change)="onEmpresaChange()"
-          [disabled]="formDisabled"
-        >
-          <option value="-1">Seleccione empresa</option>
-          <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.razon_social }}</option>
-        </select>
-      </div>
-      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
-        <label for="sucursal" class="form-label" style="font-size: 0.95rem;">Sucursal</label>
-        <select
-          id="sucursal"
-          class="form-control form-control-sm"
-          name="sucursal"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.sucursal"
-          (change)="onSucursalChange()" 
-          [disabled]="formDisabled || formData.empresa === -1"
-        >
-          <option value="-1">Seleccione sucursal</option>
-          <option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">{{ sucursal.descripcion }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="d-flex align-items-end flex-wrap mt-2" style="gap: 12px;">
-      <div class="form-group mb-0" style="flex: 1 1 160px; min-width: 140px;">
-        <label for="deposito" class="form-label" style="font-size: 0.95rem;">Depósito</label>
-        <select
-          id="deposito"
-          class="form-control form-control-sm"
-          name="deposito"
-          style="height: 32px; font-size: 1rem; padding: 2px 8px;"
-          [(ngModel)]="formData.deposito"
-          [disabled]="formDisabled || formData.empresa === -1 || formData.sucursal === -1"
-        >
-          <option value="-1">Seleccione depósito</option>
-          <option *ngFor="let deposito of depositos" [value]="deposito.id_deposito">{{ deposito.descripcion }}</option>
-        </select>
+
+    <!-- Pestaña 2: Artículos -->
+    <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">
+      <div class="form-box mt-3">
+        <!-- Alerta para artículos -->
+        <div *ngIf="!hayArticulosAgregados" class="alert alert-info" role="alert">
+          Debe agregar al menos un artículo para completar la operación.
+        </div>
+
+        <!-- Campo de filtro de artículos -->
+        <div class="row mb-3">
+          <div class="col-md-12 position-relative">
+            <label for="filtroArticulo" class="form-label">Filtrar artículos</label>
+            <input type="text" class="form-control" id="filtroArticulo" 
+                   placeholder="Escriba para buscar artículos por código o descripción"
+                   [disabled]="formDisabled"
+                   (input)="buscarArticulos($event)"
+                   (keydown)="manejarTeclaEnFiltro($event)">
+            
+            <!-- Sugerencias de artículos -->
+            <div *ngIf="mostrarSugerencias" 
+                 class="position-absolute bg-white border rounded shadow-sm" 
+                 style="z-index: 1050; max-height: 200px; width: 100%; overflow-y: auto; top: calc(100% - 1px);">
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let articulo of articulosBuscados; let idx = index" 
+                    class="list-group-item list-group-item-action sugerencia-articulo"
+                    [class.active]="idx === 0"
+                    (click)="seleccionarArticulo(articulo)">
+                    <strong>{{ articulo.codigo_alfanumerico }}</strong> - {{ articulo.descripcion }}
+                </li>
+                <li *ngIf="articulosBuscados.length === 0" class="list-group-item text-muted">
+                  No se encontraron artículos
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque para los datos del artículo -->
+        <div class="row">
+          <!-- Campo de código de artículo -->
+          <div class="col-md-4 mb-3">
+            <label for="codigoArticulo" class="form-label">Código de Artículo</label>
+            <input type="text" class="form-control" id="codigoArticulo" 
+                   [(ngModel)]="formData.codigoArticulo" 
+                   name="codigoArticulo" 
+                   [disabled]="formDisabled" readonly>
+          </div>
+          
+          <!-- Campo de descripción de artículo -->
+          <div class="col-md-5 mb-3">
+            <label for="descripcionArticulo" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcionArticulo" 
+                   [(ngModel)]="formData.descripcionArticulo" 
+                   name="descripcionArticulo" 
+                   [disabled]="formDisabled" readonly>
+          </div>
+          
+          <!-- Campo de cantidad -->
+          <div class="col-md-2 mb-3">
+            <label for="cantidadArticulo" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="cantidadArticulo" 
+                   [(ngModel)]="formData.cantidadArticulo" 
+                   name="cantidadArticulo" 
+                   [disabled]="formDisabled" min="1"
+                   (keydown)="manejarTeclaEnCantidad($event)">
+          </div>
+          
+          <!-- Botón de agregar (ahora al lado de cantidad) -->
+          <div class="col-md-1 mb-3 d-flex align-items-end">
+            <button type="button" class="btn btn-outline-primary w-100"
+              (click)="agregarDetalle()" [disabled]="formDisabled">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de artículos -->
+        <div class="table-container mt-3">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 5%">#</th>
+                <th scope="col" style="width: 15%">Código Alfanumérico</th>
+                <th scope="col" style="width: 15%">Código Artículo</th>
+                <th scope="col" style="width: 40%">Descripción</th>
+                <th scope="col" style="width: 15%">Cantidad</th>
+                <th scope="col" style="width: 10%">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of detalles; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ detalle.codigo }}</td>
+                <td>{{ detalle.codigo_articulo }}</td>
+                <td>{{ detalle.descripcion }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="eliminarDetalle(i)" [disabled]="formDisabled">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="detalles.length === 0">
+                <td colspan="6" class="text-center">No hay artículos agregados</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-primary" [disabled]="!hayArticulosAgregados" (click)="guardarAjuste()">
+            <i class="fa-solid fa-save"></i> Guardar Ajuste
+          </button>
+        </div>
       </div>
     </div>
   </div>

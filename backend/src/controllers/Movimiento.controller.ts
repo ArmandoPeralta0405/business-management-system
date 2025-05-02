@@ -60,4 +60,14 @@ export class MovimientoController {
       res.status(500).json({ error: 'Error al eliminar Movimiento' });
     }
   }
+
+  async getMovimientosStock(req: Request, res: Response) {
+    try {
+      const movimientos = await movimientoService.getMovimientosStock();
+      res.json(movimientos);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener movimientos de stock' });
+    }
+  }
+
 }

@@ -3,8 +3,14 @@ import pool from '../config/database';
 import { RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 
 export class ArticuloService extends ArticuloModel {
+
   async getAll(): Promise<IArticuloView[]> {
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM articulo_view');
+    return rows as IArticuloView[];
+  }
+
+  async getArticulosActivos(): Promise<IArticuloView[]> {
+    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM articulo_view WHERE estado = 'Activo'`);
     return rows as IArticuloView[];
   }
 

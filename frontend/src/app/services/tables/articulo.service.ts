@@ -32,4 +32,8 @@ export class ArticuloService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getArticulosActivos(): Observable<IArticuloView[]> {
+    return this.http.get<IArticuloView[]>(`${this.apiUrl}/activos`);
+  }
 }

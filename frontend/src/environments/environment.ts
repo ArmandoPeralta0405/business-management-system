@@ -3,5 +3,5 @@ export const environment = {
     apiUrl: 'http://192.168.0.111:3000' // URL base de tu API CENTURY
     //apiUrl: 'http://192.168.100.34:3000' // URL base de tu API BIOS
     //apiUrl: 'http://192.168.0.110:3000' // URL base de tu API CASA SAN ANTONIO
-    //apiUrl: 'http://192.168.100.6:3000' // URL base de tu API CASA CAMPO 9
+    //apiUrl: 'http://192.168.100.9:3000' // URL base de tu API CASA CAMPO 9
   };

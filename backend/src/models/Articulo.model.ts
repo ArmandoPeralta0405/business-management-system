@@ -40,8 +40,10 @@ export interface IArticulo{
    */
   export abstract class ArticuloModel {
     abstract getAll(): Promise<IArticuloView[]>;
+    abstract getArticulosActivos(): Promise<IArticuloView[]>;
     abstract getById(id: number): Promise<IArticulo | null>;
     abstract create(articuloData: Omit<IArticulo, 'id_articulo'>): Promise<number>;
     abstract update(id: number, articuloData: Partial<IArticulo>): Promise<boolean>;
     abstract delete(id: number): Promise<boolean>;
+    
   }
