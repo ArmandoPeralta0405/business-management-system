@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IDepartamento, IDepartamentoView } from '../../models/departamento.model';
 import { Observable } from 'rxjs';
 
@@ -31,5 +31,22 @@ export class DepartamentoService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Método para generar y descargar el informe PDF
+  generarInformePDF(): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/pdf'
+    });
+    
+    return this.http.get(`${this.apiUrl}/informe-pdf`, {
+      headers: headers,
+      responseType: 'blob'
+    });
+  }
+
+  // Método para generar y guardar el informe en el servidor
+  guardarInformePDF(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/guardar-informe-pdf`);
   }
 }

@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Informe de Departamentos</h4>
+    </div>
+    
+    <div class="card-body">
+      <!-- Alerta de éxito -->
+      <div *ngIf="mensajeExito" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ mensajeExito }}
+        <button type="button" class="btn-close" (click)="mensajeExito = ''"></button>
+      </div>
+      
+      <!-- Alerta de error -->
+      <div *ngIf="mensajeError" class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ mensajeError }}
+        <button type="button" class="btn-close" (click)="mensajeError = ''"></button>
+      </div>
+      
+      <div class="mb-4">
+        <h5>Información del Informe</h5>
+        <p>Este informe incluye todos los departamentos registrados en el sistema con la siguiente información:</p>
+        <ul>
+          <li>ID del departamento</li>
+          <li>Nombre del departamento</li>
+          <li>País al que pertenece</li>
+        </ul>
+      </div>
+      
+      <div class="bg-light p-3 mb-4 rounded">
+        <p class="mb-0"><strong>Total de departamentos:</strong> {{ departamentos.length }}</p>
+      </div>
+      
+      <!-- Indicador de carga -->
+      <div *ngIf="cargando" class="d-flex justify-content-center mb-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <span class="ms-2">Procesando, por favor espere...</span>
+      </div>
+    </div>
+    
+    <div class="card-footer d-flex justify-content-end">
+      <button 
+        class="btn btn-primary me-2" 
+        (click)="confirmarGenerarInforme()" 
+        [disabled]="cargando">
+        <i class="bi bi-file-pdf me-1"></i> Generar y Descargar Informe
+      </button>
+      
+      <button 
+        class="btn btn-secondary" 
+        (click)="guardarInformeEnServidor()" 
+        [disabled]="cargando">
+        <i class="bi bi-save me-1"></i> Guardar en Servidor
+      </button>
+    </div>
+  </div>
+</div>

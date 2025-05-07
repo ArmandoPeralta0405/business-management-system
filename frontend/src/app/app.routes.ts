@@ -42,6 +42,7 @@ import { TipoBarraListComponent } from './components/pages/control_stock/manteni
 import { MovimientoFormComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-form/movimiento-form.component';
 import { MovimientoListComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-list/movimiento-list.component';
 import { AjusteStockFormComponent } from './components/pages/control_stock/movimientos/ajustes_stocks/ajuste-stock-form/ajuste-stock-form.component';
+import { InformeDepartamentoComponent } from './components/pages/sistema_general/informes/departamentos/informe-departamento/informe-departamento.component';
 
 export const routes: Routes = [
     {
@@ -111,6 +112,12 @@ export const routes: Routes = [
             { path: 'movimientos/editar/:id', component: MovimientoFormComponent },
 
             // ... otras rutas
+          ]
+        },
+        { 
+          path: 'sistema_general/informes',
+          children: [
+            { path: 'departamentos', component: InformeDepartamentoComponent }
           ]
         },
         { 
