@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { DepartamentoService } from '../services/Departamento.service';
 import { DepartamentoReport } from '../reports/departamentos/DepartamentoReport';
-import * as path from 'path';
 import { IDepartamento, IDepartamentoView } from '../models/Departamento.model';
 
 const departamentoService = new DepartamentoService();

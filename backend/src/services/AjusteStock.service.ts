@@ -1,4 +1,4 @@
-import { IAjusteStock, IAjusteStockView, AjusteStockModel } from '../models/AjusteStock.model';
+import { IAjusteStock, IAjusteStockView, AjusteStockModel, IAjusteStockFiltros } from '../models/AjusteStock.model';
 import pool from '../config/database';
 import { RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 
@@ -65,5 +65,21 @@ export class AjusteStockService extends AjusteStockModel {
     );
     return result.affectedRows > 0;
   }
-
+  
+  async getByFiltros(filtros: IAjusteStockFiltros): Promise<IAjusteStockView[]> {
+    let query = 'SELECT * FROM ajuste_stock_view WHERE fecha BETWEEN ? AND ?';
+    const params: any[] = [filtros.fechaInicial, filtros.fechaFinal];
+    
+    // Agregar filtro de movimiento si está presente
+    if (filtros.id_movimiento) {
+      query += ' AND id_movimiento = ?';
+      params.push(filtros.id_movimiento);
+    }
+    
+    // Ordenar por fecha
+    query += ' ORDER BY fecha DESC, hora DESC';
+    
+    const [rows] = await pool.query<RowDataPacket[]>(query, params);
+    return rows as IAjusteStockView[];
+  }
 }

@@ -31,15 +31,27 @@ export interface IAjusteStockView {
     id_usuario: number;
     usuario_descripcion: string;
 }
-  
-  /**
-   * Estructura base del modelo Ajuste Stock (sin implementaciones)
-   * Solo define los métodos que deberá implementar el servicio
-   */
-  export abstract class AjusteStockModel {
-    abstract getAll(): Promise<IAjusteStockView[]>;
-    abstract getById(id: number): Promise<IAjusteStock | null>;
-    abstract create(ajusteStockData: Omit<IAjusteStock, 'id_ajuste'>): Promise<number>;
-    abstract update(id: number, ajusteStockData: Partial<IAjusteStock>): Promise<boolean>;
-    abstract delete(id: number): Promise<boolean>;
-  }
+
+
+/**
+ * Estructura base del modelo Ajuste Stock (sin implementaciones)
+ * Solo define los métodos que deberá implementar el servicio
+ */
+/**
+ * Interfaz para los filtros del informe de ajustes de stock
+ */
+export interface IAjusteStockFiltros {
+  fechaInicial: string;
+  fechaFinal: string;
+  id_movimiento?: number; // Opcional
+}
+
+export abstract class AjusteStockModel {
+  abstract getAll(): Promise<IAjusteStockView[]>;
+  abstract getById(id: number): Promise<IAjusteStock | null>;
+  abstract create(ajusteStockData: Omit<IAjusteStock, 'id_ajuste'>): Promise<number>;
+  abstract update(id: number, ajusteStockData: Partial<IAjusteStock>): Promise<boolean>;
+  abstract delete(id: number): Promise<boolean>;
+  abstract fetchNextNumeroComprobante(): Promise<number>;
+  abstract getByFiltros(filtros: IAjusteStockFiltros): Promise<IAjusteStockView[]>; // Nuevo método
+}
