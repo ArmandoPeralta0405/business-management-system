@@ -1,0 +1,110 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Informe de Ajustes de Stock</h5>
+    </div>
+    <div class="card-body">
+      <!-- Filtros -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h6 class="border-bottom pb-2 mb-3">Filtros</h6>
+        </div>
+        
+        <!-- Fecha Inicial -->
+        <div class="col-md-4 mb-3">
+          <label for="fechaInicial" class="form-label">Fecha Inicial <span class="text-danger">*</span></label>
+          <input 
+            type="date" 
+            class="form-control" 
+            id="fechaInicial" 
+            [(ngModel)]="fechaInicial" 
+            required>
+        </div>
+        
+        <!-- Fecha Final -->
+        <div class="col-md-4 mb-3">
+          <label for="fechaFinal" class="form-label">Fecha Final <span class="text-danger">*</span></label>
+          <input 
+            type="date" 
+            class="form-control" 
+            id="fechaFinal" 
+            [(ngModel)]="fechaFinal" 
+            required>
+        </div>
+        
+        <!-- Tipo de Movimiento -->
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Tipo de Movimiento</label>
+          <div class="mt-2">
+            <div class="form-check form-check-inline">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="tipoMovimiento" 
+                id="tipoAmbos" 
+                value="ambos" 
+                [(ngModel)]="tipoMovimiento">
+              <label class="form-check-label" for="tipoAmbos">Ambos</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="tipoMovimiento" 
+                id="tipoEntrada" 
+                value="entrada" 
+                [(ngModel)]="tipoMovimiento">
+              <label class="form-check-label" for="tipoEntrada">Entrada</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="tipoMovimiento" 
+                id="tipoSalida" 
+                value="salida" 
+                [(ngModel)]="tipoMovimiento">
+              <label class="form-check-label" for="tipoSalida">Salida</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botones de acción -->
+      <div class="row">
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <button 
+            class="btn btn-primary" 
+            (click)="confirmarGenerarInforme()" 
+            [disabled]="cargando">
+            <i class="bi bi-file-earmark-pdf me-1"></i> Generar Informe
+          </button>
+          <!--
+          <button 
+            class="btn btn-success" 
+            (click)="guardarInformeEnServidor()" 
+            [disabled]="cargando">
+            <i class="bi bi-save me-1"></i> Guardar en Servidor
+          </button>
+          
+        </div>
+      </div>
+      
+      <!-- Indicador de carga -->
+      <div *ngIf="cargando" class="text-center mt-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Procesando solicitud...</p>
+      </div>
+      
+      <!-- Mensajes de éxito/error -->
+      <div *ngIf="mensajeExito" class="alert alert-success mt-3">
+        {{ mensajeExito }}
+      </div>
+      <div *ngIf="mensajeError" class="alert alert-danger mt-3">
+        {{ mensajeError }}
+      </div>
+    </div>
+  </div>
+</div>

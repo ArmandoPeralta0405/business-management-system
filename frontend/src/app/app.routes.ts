@@ -43,6 +43,7 @@ import { MovimientoFormComponent } from './components/pages/sistema_general/mant
 import { MovimientoListComponent } from './components/pages/sistema_general/mantenimientos/movimientos/movimiento-list/movimiento-list.component';
 import { AjusteStockFormComponent } from './components/pages/control_stock/movimientos/ajustes_stocks/ajuste-stock-form/ajuste-stock-form.component';
 import { InformeDepartamentoComponent } from './components/pages/sistema_general/informes/departamentos/informe-departamento/informe-departamento.component';
+import { InformeAjusteStockComponent } from './components/pages/control_stock/informes/informe-ajuste-stock/informe-ajuste-stock.component';
 
 export const routes: Routes = [
     {
@@ -162,7 +163,13 @@ export const routes: Routes = [
           children: [
             { path: 'ajustes_stocks', component: AjusteStockFormComponent }
           ]
-        }
+        },
+        { 
+          path: 'control_stock/informes',
+          children: [
+            { path: 'ajustes_stocks', component: InformeAjusteStockComponent }
+          ]
+        },
       ]
     }
   ];

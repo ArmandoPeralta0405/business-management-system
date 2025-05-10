@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { IAjusteStock, IAjusteStockView } from '../../models/ajuste_stock.model';
 import { Observable } from 'rxjs';
 
@@ -47,4 +47,49 @@ export class AjusteStockService {
   getNextNumeroComprobante(): Observable<{ numeroComprobante: number }> {
     return this.http.get<{ numeroComprobante: number }>(`${this.apiUrl}/nuevo_comprobante`, { headers: this.getHeaders() });
   }
+
+  // Método para generar informe PDF con filtros
+generarInformePDFFiltrado(filtros: any): Observable<Blob> {
+  let params = new HttpParams();
+  
+  // Agregar parámetros de filtro
+  if (filtros.fechaInicial) {
+    params = params.set('fechaInicial', filtros.fechaInicial);
+  }
+  
+  if (filtros.fechaFinal) {
+    params = params.set('fechaFinal', filtros.fechaFinal);
+  }
+  
+  if (filtros.id_movimiento) {
+    params = params.set('id_movimiento', filtros.id_movimiento);
+  }
+  
+  return this.http.get(`${this.apiUrl}/informe-pdf-filtrado`, {
+    params: params,
+    responseType: 'blob'
+  });
+}
+
+// Método para guardar informe PDF con filtros
+guardarInformePDFFiltrado(filtros: any): Observable<any> {
+  let params = new HttpParams();
+  
+  // Agregar parámetros de filtro
+  if (filtros.fechaInicial) {
+    params = params.set('fechaInicial', filtros.fechaInicial);
+  }
+  
+  if (filtros.fechaFinal) {
+    params = params.set('fechaFinal', filtros.fechaFinal);
+  }
+  
+  if (filtros.id_movimiento) {
+    params = params.set('id_movimiento', filtros.id_movimiento);
+  }
+  
+  return this.http.get<any>(`${this.apiUrl}/guardar-informe-pdf-filtrado`, {
+    params: params
+  });
+}
 }
