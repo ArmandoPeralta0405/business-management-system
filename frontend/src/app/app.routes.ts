@@ -44,6 +44,8 @@ import { MovimientoListComponent } from './components/pages/sistema_general/mant
 import { AjusteStockFormComponent } from './components/pages/control_stock/movimientos/ajustes_stocks/ajuste-stock-form/ajuste-stock-form.component';
 import { InformeDepartamentoComponent } from './components/pages/sistema_general/informes/departamentos/informe-departamento/informe-departamento.component';
 import { InformeAjusteStockComponent } from './components/pages/control_stock/informes/informe-ajuste-stock/informe-ajuste-stock.component';
+import { MonedaFormComponent } from './components/pages/sistema_general/mantenimientos/monedas/moneda-form/moneda-form.component';
+import { MonedaListComponent } from './components/pages/sistema_general/mantenimientos/monedas/moneda-list/moneda-list.component';
 
 export const routes: Routes = [
     {
@@ -111,6 +113,10 @@ export const routes: Routes = [
             { path: 'movimientos', component: MovimientoListComponent },
             { path: 'movimientos/nuevo', component: MovimientoFormComponent },
             { path: 'movimientos/editar/:id', component: MovimientoFormComponent },
+
+            { path: 'monedas', component: MonedaListComponent },
+            { path: 'monedas/nuevo', component: MonedaFormComponent },
+            { path: 'monedas/editar/:id', component: MonedaFormComponent },
 
             // ... otras rutas
           ]

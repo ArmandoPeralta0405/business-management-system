@@ -1,0 +1,139 @@
+<h2>Formulario de Monedas</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/sistema_general/mantenimientos/monedas']" routerLinkActive="router-link-active">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="monedaForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                        [class.is-invalid]="monedaForm.get('descripcion')?.invalid && (monedaForm.get('descripcion')?.dirty || monedaForm.get('descripcion')?.touched)"
+                        placeholder="Ingrese el nombre completo de la moneda" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="monedaForm.get('descripcion')?.invalid && (monedaForm.get('descripcion')?.dirty || monedaForm.get('descripcion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="monedaForm.get('descripcion')?.errors?.['required']">
+                            La descripción es requerida
+                        </div>
+                        <div *ngIf="monedaForm.get('descripcion')?.errors?.['maxlength']">
+                            La descripción no puede exceder los 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="abreviacion" class="form-label">Abreviación</label>
+                    <input type="text" class="form-control" id="abreviacion" formControlName="abreviacion"
+                        [class.is-invalid]="monedaForm.get('abreviacion')?.invalid && (monedaForm.get('abreviacion')?.dirty || monedaForm.get('abreviacion')?.touched)"
+                        placeholder="Ingrese la abreviación de la moneda" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="monedaForm.get('abreviacion')?.invalid && (monedaForm.get('abreviacion')?.dirty || monedaForm.get('abreviacion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="monedaForm.get('abreviacion')?.errors?.['required']">
+                            La abreviación es requerida
+                        </div>
+                        <div *ngIf="monedaForm.get('abreviacion')?.errors?.['maxlength']">
+                            La abreviación no puede exceder los 10 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="codigo_iso" class="form-label">Código ISO</label>
+                    <input type="text" class="form-control" id="codigo_iso" formControlName="codigo_iso"
+                        [class.is-invalid]="monedaForm.get('codigo_iso')?.invalid && (monedaForm.get('codigo_iso')?.dirty || monedaForm.get('codigo_iso')?.touched)"
+                        placeholder="Ingrese el código ISO (ej: USD)" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="monedaForm.get('codigo_iso')?.invalid && (monedaForm.get('codigo_iso')?.dirty || monedaForm.get('codigo_iso')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="monedaForm.get('codigo_iso')?.errors?.['required']">
+                            El código ISO es requerido
+                        </div>
+                        <div *ngIf="monedaForm.get('codigo_iso')?.errors?.['maxlength']">
+                            El código ISO no puede exceder los 3 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="simbolo" class="form-label">Símbolo</label>
+                    <input type="text" class="form-control" id="simbolo" formControlName="simbolo"
+                        [class.is-invalid]="monedaForm.get('simbolo')?.invalid && (monedaForm.get('simbolo')?.dirty || monedaForm.get('simbolo')?.touched)"
+                        placeholder="Ingrese el símbolo (ej: $, €)" autocomplete="off">
+
+                    <!-- Mensajes de validación -->
+                    <div *ngIf="monedaForm.get('simbolo')?.invalid && (monedaForm.get('simbolo')?.dirty || monedaForm.get('simbolo')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="monedaForm.get('simbolo')?.errors?.['required']">
+                            El símbolo es requerido
+                        </div>
+                        <div *ngIf="monedaForm.get('simbolo')?.errors?.['maxlength']">
+                            El símbolo no puede exceder los 5 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="decimales" class="form-label">Decimales</label>
+                    <input type="number" class="form-control" id="decimales" formControlName="decimales"
+                        [class.is-invalid]="monedaForm.get('decimales')?.invalid && (monedaForm.get('decimales')?.dirty || monedaForm.get('decimales')?.touched)"
+                        placeholder="Número de decimales" min="0" max="10">
+                    
+                    <div *ngIf="monedaForm.get('decimales')?.invalid && (monedaForm.get('decimales')?.dirty || monedaForm.get('decimales')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="monedaForm.get('decimales')?.errors?.['required']">
+                            El número de decimales es requerido
+                        </div>
+                        <div *ngIf="monedaForm.get('decimales')?.errors?.['min']">
+                            El valor mínimo es 0
+                        </div>
+                        <div *ngIf="monedaForm.get('decimales')?.errors?.['max']">
+                            El valor máximo es 10
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+                        <label class="form-check-label" for="estado">Activo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/sistema_general/mantenimientos/monedas']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="monedaForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
