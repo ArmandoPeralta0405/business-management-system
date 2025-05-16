@@ -46,6 +46,8 @@ import { InformeDepartamentoComponent } from './components/pages/sistema_general
 import { InformeAjusteStockComponent } from './components/pages/control_stock/informes/informe-ajuste-stock/informe-ajuste-stock.component';
 import { MonedaFormComponent } from './components/pages/sistema_general/mantenimientos/monedas/moneda-form/moneda-form.component';
 import { MonedaListComponent } from './components/pages/sistema_general/mantenimientos/monedas/moneda-list/moneda-list.component';
+import { ProveedorListComponent } from './components/pages/sistema_general/mantenimientos/proveedores/proveedor-list/proveedor-list.component';
+import { ProveedorFormComponent } from './components/pages/sistema_general/mantenimientos/proveedores/proveedor-form/proveedor-form.component';
 
 export const routes: Routes = [
     {
@@ -117,6 +119,10 @@ export const routes: Routes = [
             { path: 'monedas', component: MonedaListComponent },
             { path: 'monedas/nuevo', component: MonedaFormComponent },
             { path: 'monedas/editar/:id', component: MonedaFormComponent },
+
+            { path: 'proveedores', component: ProveedorListComponent },
+            { path: 'proveedores/nuevo', component: ProveedorFormComponent },
+            { path: 'proveedores/editar/:id', component: ProveedorFormComponent },
 
             // ... otras rutas
           ]

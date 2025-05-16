@@ -1,0 +1,170 @@
+<h2>{{ formTitle }}</h2>
+<div class="card shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ formTitle }}</h5>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-2"
+                    [routerLink]="['/sistema_general/mantenimientos/proveedores']">
+                    <i class="fa-solid fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Spinner de carga -->
+            <div *ngIf="isLoading" class="text-center my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div *ngIf="!isLoading" class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="razon_social" class="form-label">Razón Social</label>
+                    <input type="text" class="form-control" id="razon_social" formControlName="razon_social"
+                        [class.is-invalid]="proveedorForm.get('razon_social')?.invalid && (proveedorForm.get('razon_social')?.dirty || proveedorForm.get('razon_social')?.touched)"
+                        placeholder="Ingrese la razón social" maxlength="100" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('razon_social')?.invalid && (proveedorForm.get('razon_social')?.dirty || proveedorForm.get('razon_social')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('razon_social')?.errors?.['required']">
+                            La razón social es requerida
+                        </div>
+                        <div *ngIf="proveedorForm.get('razon_social')?.errors?.['maxlength']">
+                            Máximo 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="nombre_fantasia" class="form-label">Nombre Fantasía</label>
+                    <input type="text" class="form-control" id="nombre_fantasia" formControlName="nombre_fantasia"
+                        [class.is-invalid]="proveedorForm.get('nombre_fantasia')?.invalid && (proveedorForm.get('nombre_fantasia')?.dirty || proveedorForm.get('nombre_fantasia')?.touched)"
+                        placeholder="Ingrese el nombre fantasía" maxlength="100" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('nombre_fantasia')?.invalid && (proveedorForm.get('nombre_fantasia')?.dirty || proveedorForm.get('nombre_fantasia')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('nombre_fantasia')?.errors?.['maxlength']">
+                            Máximo 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="ruc" class="form-label">RUC</label>
+                    <input type="text" class="form-control" id="ruc" formControlName="ruc"
+                        [class.is-invalid]="proveedorForm.get('ruc')?.invalid && (proveedorForm.get('ruc')?.dirty || proveedorForm.get('ruc')?.touched)"
+                        placeholder="Ingrese el RUC" maxlength="20" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('ruc')?.invalid && (proveedorForm.get('ruc')?.dirty || proveedorForm.get('ruc')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('ruc')?.errors?.['maxlength']">
+                            Máximo 20 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="cedula" class="form-label">Cédula</label>
+                    <input type="text" class="form-control" id="cedula" formControlName="cedula"
+                        [class.is-invalid]="proveedorForm.get('cedula')?.invalid && (proveedorForm.get('cedula')?.dirty || proveedorForm.get('cedula')?.touched)"
+                        placeholder="Ingrese la cédula" maxlength="20" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('cedula')?.invalid && (proveedorForm.get('cedula')?.dirty || proveedorForm.get('cedula')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('cedula')?.errors?.['maxlength']">
+                            Máximo 20 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="id_ciudad" class="form-label">Ciudad</label>
+                    <select class="form-select" id="id_ciudad" formControlName="id_ciudad"
+                        [class.is-invalid]="proveedorForm.get('id_ciudad')?.invalid && (proveedorForm.get('id_ciudad')?.dirty || proveedorForm.get('id_ciudad')?.touched)">
+                        <option [ngValue]="null" disabled>Seleccione una ciudad</option>
+                        <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad.id_ciudad">
+                            {{ ciudad.descripcion }}
+                        </option>
+                    </select>
+                    <div *ngIf="proveedorForm.get('id_ciudad')?.invalid && (proveedorForm.get('id_ciudad')?.dirty || proveedorForm.get('id_ciudad')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('id_ciudad')?.errors?.['required']">
+                            La ciudad es requerida
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" formControlName="direccion"
+                        [class.is-invalid]="proveedorForm.get('direccion')?.invalid && (proveedorForm.get('direccion')?.dirty || proveedorForm.get('direccion')?.touched)"
+                        placeholder="Ingrese la dirección" maxlength="200" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('direccion')?.invalid && (proveedorForm.get('direccion')?.dirty || proveedorForm.get('direccion')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('direccion')?.errors?.['required']">
+                            La dirección es requerida
+                        </div>
+                        <div *ngIf="proveedorForm.get('direccion')?.errors?.['maxlength']">
+                            Máximo 200 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" formControlName="telefono"
+                        [class.is-invalid]="proveedorForm.get('telefono')?.invalid && (proveedorForm.get('telefono')?.dirty || proveedorForm.get('telefono')?.touched)"
+                        placeholder="Ingrese el teléfono" maxlength="20" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('telefono')?.invalid && (proveedorForm.get('telefono')?.dirty || proveedorForm.get('telefono')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('telefono')?.errors?.['required']">
+                            El teléfono es requerido
+                        </div>
+                        <div *ngIf="proveedorForm.get('telefono')?.errors?.['maxlength']">
+                            Máximo 20 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        [class.is-invalid]="proveedorForm.get('email')?.invalid && (proveedorForm.get('email')?.dirty || proveedorForm.get('email')?.touched)"
+                        placeholder="Ingrese el email" maxlength="100" autocomplete="off">
+                    <div *ngIf="proveedorForm.get('email')?.invalid && (proveedorForm.get('email')?.dirty || proveedorForm.get('email')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="proveedorForm.get('email')?.errors?.['required']">
+                            El email es requerido
+                        </div>
+                        <div *ngIf="proveedorForm.get('email')?.errors?.['email']">
+                            Formato de email inválido
+                        </div>
+                        <div *ngIf="proveedorForm.get('email')?.errors?.['maxlength']">
+                            Máximo 100 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+                        <label class="form-check-label" for="estado">Activo</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary"
+                    [routerLink]="['/sistema_general/mantenimientos/proveedores']">
+                    <i class="fa-solid fa-xmark me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="proveedorForm.invalid || isLoading">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
