@@ -16,26 +16,14 @@
             <div class="d-flex justify-content-between align-items-center">
               <div>
                 <h6 class="card-title">Usuarios</h6>
-                <h2 class="mb-0">1,254</h2>
+                <h2 class="mb-0" *ngIf="!loadingUsuarios">{{ usuariosCount }}</h2>
+                <div *ngIf="loadingUsuarios" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
               </div>
               <i class="fas fa-users fa-3x opacity-50"></i>
             </div>
-            <p class="small mt-2 mb-0">+12% desde ayer</p>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-md-6 col-lg-3 mb-3">
-        <div class="card stat-card bg-success text-white">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <h6 class="card-title">Ventas</h6>
-                <h2 class="mb-0">$5,430</h2>
-              </div>
-              <i class="fas fa-shopping-cart fa-3x opacity-50"></i>
-            </div>
-            <p class="small mt-2 mb-0">+8% desde ayer</p>
+            <p class="small mt-2 mb-0">Usuarios registrados</p>
           </div>
         </div>
       </div>
@@ -45,27 +33,51 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <h6 class="card-title">Productos</h6>
-                <h2 class="mb-0">342</h2>
+                <h6 class="card-title">Artículos</h6>
+                <h2 class="mb-0" *ngIf="!loadingArticulos">{{ articulosCount }}</h2>
+                <div *ngIf="loadingArticulos" class="spinner-border spinner-border-sm text-dark" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
               </div>
               <i class="fas fa-box-open fa-3x opacity-50"></i>
             </div>
-            <p class="small mt-2 mb-0">+5 nuevos hoy</p>
+            <p class="small mt-2 mb-0">Artículos en inventario</p>
           </div>
         </div>
       </div>
-  
+ 
+      <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card stat-card bg-success text-white">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="card-title">Ventas</h6>
+                <h2 class="mb-0" *ngIf="!loadingVentas">${{ ventasCount }}</h2>
+                <div *ngIf="loadingVentas" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+              </div>
+              <i class="fas fa-shopping-cart fa-3x opacity-50"></i>
+            </div>
+            <p class="small mt-2 mb-0">Total de ventas</p>
+          </div>
+        </div>
+      </div>      
+
       <div class="col-md-6 col-lg-3 mb-3">
         <div class="card stat-card bg-info text-white">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <div>
                 <h6 class="card-title">Órdenes</h6>
-                <h2 class="mb-0">86</h2>
+                <h2 class="mb-0" *ngIf="!loadingOrdenes">{{ ordenesCount }}</h2>
+                <div *ngIf="loadingOrdenes" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
               </div>
               <i class="fas fa-clipboard-list fa-3x opacity-50"></i>
             </div>
-            <p class="small mt-2 mb-0">3 pendientes</p>
+            <p class="small mt-2 mb-0">Órdenes activas</p>
           </div>
         </div>
       </div>

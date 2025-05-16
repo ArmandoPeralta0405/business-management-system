@@ -2,7 +2,8 @@
 .login-wrapper {
     width: 100%;
     height: 100vh;
-    background-color: #7D161A; /* Color del sidebar */
+    /*background-color: #7D161A;*/ /* Color del sidebar */
+    background-color: darkblue;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,14 +22,16 @@
   
   /* Título */
   .login-title {
-    color: #7D161A;
+    /*color: #7D161A;*/
+    color: darkblue;
     margin-bottom: 1.5rem;
     font-weight: 600;
   }
   
   /* Inputs con focus personalizado */
   .form-control:focus {
-    border-color: #7D161A;
+    /*border-color: #7D161A;*/
+    border-color: darkblue;
     box-shadow: 0 0 0 0.25rem rgba(125, 22, 26, 0.25);
   }
   
